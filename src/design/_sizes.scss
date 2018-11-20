@@ -1,0 +1,50 @@
+$font-tiny: 10px;
+$font-small: 12px;
+$font-normal: 16px;
+$font-large: 20px;
+$font-xlarge: 24px;
+
+$border-rounded-small: 4pt;
+$border-rounded-normal: 10px;
+$border-rounded-large: 20px;
+
+$input-padding: 10px 20px 15px 20px;
+$input-margin: 15px 10px 0 10px;
+
+%shadow-small {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+%shadow-normal {
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+%shadow-large {
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+%shadow-xlarge {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+%shadow-xxlarge {
+	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22i);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+%center-column-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+%center-row-div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

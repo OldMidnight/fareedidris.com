@@ -1,0 +1,24 @@
+import Vue from 'vue'
+import VueRouter from  'vue-router'
+import routes from './routes'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+    routes,
+    mode: 'history',
+    /*scrollBehaviour(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+        return { x: 0, y: 0 }
+        }
+    }*/
+})
+
+router.afterEach((to, from) => {
+    if (document.body.style.backgroundColor !== 'white') {
+        document.body.style.backgroundColor = 'white'
+    }
+})
+export default router
