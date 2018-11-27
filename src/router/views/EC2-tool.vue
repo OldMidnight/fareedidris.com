@@ -1,16 +1,36 @@
 <script>
+import { api } from '@/api'
 export default {
     name: 'ec2',
     data() {
         return {
-	    anon: 'not_anon',
-	    student_num: '',
-	    lecturer: '',
-	    message_subject: '',
-	    message: '',
-	    urgent: ''
+	    creds: {
+	        is_anon: false,
+	        student_num: '',
+		student_email: '',
+	        lecturer_id: '',
+	        message_subject: '',
+	        message: '',
+	        urgent: false
+	    }
 	}
     },
+    methods: {
+        sendMessage: function() {
+	    console.log('sending to api')
+	    console.log(this.creds)
+	    api.post('validate', this.creds)
+	        .then((response) => {
+		    console.log(response)
+		})
+		.catch((error) => {
+		    console.log(error)
+		})
+	},
+	test: function() {
+	    console.log(this.is_anon)
+	}
+    }
 }
 </script>
 
@@ -24,32 +44,29 @@ export default {
 	    <div id="tool-body">
 	        <div class="radio-input-container">
 		    <div class="radio-input">
-	                <label for="not_anon">Use Student Number</label>
-	                <input type="radio" name="not_anon" value="not_anon" v-model="anon" checked>
-		    </div>
-		    <div class="radio-input">
 		        <label for="is_anon">Send Anonymously*</label>
-		        <input type="radio" name="is_anon" value="is_anon" v-model="anon">
+		        <input type="checkbox" name="is_anon" v-model="creds.is_anon" @click="test()">
 		    </div>
 		</div>
-		<input type="number" name="student_num" v-if="anon === 'not_anon'" v-model.number="student_num" placeholder="Student Number..." maxlength=8 required>
-		<select v-model="lecturer">
+		<input type="number" name="student_num" v-if="creds.is_anon === false" v-model.number="creds.student_num" placeholder="Student Number..." maxlength=8 required>
+		<input type="email" name="student_email" v-model="creds.student_email" placeholder="Student Email..." required>
+		<select v-model.number="creds.lecturer_id">
 		    <option disabled value="">Please select one</option>
-		    <option>Rob Brennan: CA222 - Enterprise Information Systems</option>
-		    <option>Stephen Blott: CA277 - Programming Fundamentals II</option>
-		    <option>Renaat Verbruggen: CA228 - Systems Analysis/Business Systems Analysis</option>
-		    <option>Alistair Sutherland: CA200 - Quantitative Analysis For Business Decisions</option>
-		    <option>Jane Kernan: CA227 - Business Databases Management I</option>
+		    <option value="1">Rob Brennan: CA222 - Enterprise Information Systems</option>
+		    <option value="2">Stephen Blott: CA277 - Programming Fundamentals II</option>
+		    <option value="5">Renaat Verbruggen: CA228 - Systems Analysis/Business Systems Analysis</option>
+		    <option value="3">Alistair Sutherland: CA200 - Quantitative Analysis For Business Decisions</option>
+		    <option value="4">Jane Kernan: CA227 - Business Databases Management I</option>
 		</select>
-		<input type="text" name="message_subject" placeholder="Message Subject..." v-model="message_subject" required>
-		<textarea name="message" v-model="message" placeholder="Your Message..." required></textarea>
+		<input type="text" name="message_subject" placeholder="Message Subject..." v-model="creds.message_subject" required>
+		<textarea name="message" v-model="creds.message" placeholder="Your Message..." required></textarea>
 		<div class="radio-input-container">
 		    <div class="radio-input">
 		        <label for="urgent">Urgent Message</label>
-		        <input type="checkbox" name="urgent" value="is_urgent" v-model="urgent">
+		        <input type="checkbox" name="urgent" v-model="creds.urgent">
 		    </div>
 		</div>
-		<BaseButton>Send Message</BaseButton>
+		<BaseButton @click="sendMessage()">Send Message</BaseButton>
 	    </div>
 	    <div id="tool-footer">
 	        <p>* - Message that are sent anonymously will be viewed by myself to ensure it complies with DCU's email guidelines. Messages not sent anonymously will not be viewed by me but will go through validation for syntax and punctuation errors.</p>
