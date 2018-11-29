@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-        baseURL: 'https://fareedidris-api.herokuapp.com/ec2/',
+	baseURL: 'http://127.0.0.1:5000/ec2',
 	timeout: 3000,
 	headers: { 'Content-Type': 'application/json' }
 });

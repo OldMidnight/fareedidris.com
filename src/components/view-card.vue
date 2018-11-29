@@ -1,5 +1,7 @@
 <script>
+import { mixin as clickaway } from 'vue-clickaway'
 export default {
+    mixins: [ clickaway ],
     props: {
         cardName: {
 	    type: String,
@@ -27,11 +29,19 @@ export default {
         }
     },
     methods: {
+        closeCard: function(e) {
+	    if (this.viewSelected) {
+	        console.log(e)
+	        var c = document.querySelector('.selected')
+	        c.classList.remove('selected')
+	        document.body.style.backgroundColor = "white"
+	        this.viewSelected = false
+	    }
+	},
         select: function(e) {
 	    var parentEl = e.target.parentElement.parentElement
 	    document.body.style.backgroundColor = "rgba(0,0,0,0.4)"
 	    parentEl.classList.add('selected')
-	    parentEl.focus()
 	    this.viewSelected = true
 	},
 	deselect: function(e) {
@@ -50,18 +60,23 @@ export default {
 </script>
 
 <template>
-    <div class="view-card">
+    <div class="view-card" v-if="viewSelected === false">
+        <div class="view-card-header">
+            <p class="card-name">{{ cardName }}</p>
+	</div>
+	<div class="view-card-body">
+	    <p class="card-desc">{{ cardDescription }}</p>
+	    <BaseButton @click="select($event)" type="button">{{ buttonText }}</BaseButton>
+	</div>
+    </div>
+    <div class="view-card" v-on-clickaway="closeCard" v-else>
         <div class="view-card-close">
-            <span v-if="this.viewSelected === true" @click="deselect($event)">close</span>
+            <span @click="deselect($event)">close</span>
 	</div>
         <div class="view-card-header">
             <p class="card-name">{{ cardName }}</p>
 	</div>
-	<div class="view-card-body" v-if="this.viewSelected === false">
-	    <p class="card-desc">{{ cardDescription }}</p>
-	    <BaseButton @click="select($event)" type="button">{{ buttonText }}</BaseButton>
-	</div>
-	<div class="view-card-body" v-else>
+	<div class="view-card-body">
 	    <p class="card-desc">{{ cardBody }}</p>
 	    <BaseLink @click="deselect($event)" tag="BaseButton" :key="this.route.name" :to="this.route">
     	        {{ buttonBodyText }}

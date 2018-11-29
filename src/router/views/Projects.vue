@@ -35,8 +35,9 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width: 85%;
-    margin-left: 15%;
+    width: 90%;
+    margin-left: 10%;
+    margin-top: 2%;
 }
 
 #view-cards {
@@ -56,15 +57,16 @@ export default {
     height: auto;
     width: 75%;
     text-align: center;
-    border-bottom: 1px solid;
+    border: 1px solid #b3b3b3;
+    border-radius: 25px;
     padding-bottom: 30px;
     #view-header-text {
-        font-size: 40px;
+        font-size: 30px;
 	margin-bottom: 10px;
 	font-weight: bold;
     }
     #view-header-desc {
-        font-size: 20px;
+        font-size: 15px;
 	margin-top: 10px;
     }
 }

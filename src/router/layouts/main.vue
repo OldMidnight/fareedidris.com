@@ -10,11 +10,14 @@ export default {
 <template>
     <div id="container">
         <NavBar />
-	<slot />
+	<transition name="layout-main" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight slow" mode="out-in">
+	    <slot />
+	</transition>
     </div>
 </template>
 
 <style lang="scss" scoped>
+@import '~animate.css/animate.min.css';
 #container {
     width: 100%;
     height: 100%;

@@ -45,8 +45,8 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width: 85%;
-    margin-left: 15%;
+    width: 90%;
+    margin-left: 10%;
     padding-left: 10%;
     padding-right: 10%;
 }

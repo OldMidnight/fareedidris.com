@@ -15,13 +15,13 @@
     width: 35%;
     margin: auto;
     margin-top: 15px;
-    border: 1px solid black;;
+    border: 1px solid blue;
     padding: 0;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .button:hover {
-    @extend %shadow-normal;
+    @extend %shadow-small;
 }
 </style>
