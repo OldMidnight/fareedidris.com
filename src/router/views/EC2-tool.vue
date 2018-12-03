@@ -57,7 +57,6 @@ export default {
 	    message_subject: {
 	        required,
 		minLength: minLength(12),
-		maxLength: maxLength(30)
 	    },
 	    message: {
 	        required
@@ -101,6 +100,7 @@ export default {
 	    if (this.$v.$invalid) {
 	        this.message_added = 'failed'
 		console.log('send failed')
+		console.log(this.$v)
 	    } else {
                 if (this.message_added === 'processing') {
 	            api.post('validate', this.creds)

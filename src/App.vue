@@ -25,6 +25,11 @@ export default {
     box-sizing: border-box;
     color: black;
     outline: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Quicksand', sans-serif;
 }
 
 html, body {

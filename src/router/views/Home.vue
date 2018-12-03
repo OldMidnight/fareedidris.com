@@ -9,7 +9,7 @@ export default {
     <div id="home-view-container">
         <div id="home-header">
 	    <p id="name">Fareed Idris</p>
-	    <p id="header-quote">Hi! Welcome to my website! Might not seem like much now, but not to worry, it's all still under construction. My projects page however is up and running so click here to get there now, or use the navbar on your left.</p>
+	    <p id="header-quote">Hi! Welcome to my website! Might not seem like much now, but not to worry, it's all still under construction. My projects page however is up and running so use the navbar on your left to get started!</p>
 	</div>
 	<div id="view-card-container">
             <div class="view-card image-card">

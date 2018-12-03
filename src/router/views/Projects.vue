@@ -1,6 +1,9 @@
 <script>
 import ViewCard from '@/components/view-card.vue'
 export default {
+    page: {
+        title: 'Projects'
+    },
     name: 'projects',
     components: { ViewCard },
     data() {
