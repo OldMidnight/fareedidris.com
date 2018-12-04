@@ -20,6 +20,7 @@
     "axios": "^0.18.0",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "newrelic": "^4.12.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
     "vue-clickaway": "^2.2.2",
