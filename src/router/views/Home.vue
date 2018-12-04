@@ -1,46 +1,65 @@
 <script>
-// @ is an alias to /src
 export default {
   name: 'home',
+  computed: {
+        isMobileContainer: function() {
+            return this.$mq === 'phone' ? 'm-home-view-container' : 'home-view-container'
+        },
+        isMobileHeader: function() {
+            return this.$mq === 'phone' ? 'm-home-header' : 'home-header'
+        }
+    }
 }
 </script>
 
 <template>
-    <div id="home-view-container">
-        <div id="home-header">
-	    <p id="name">Fareed Idris</p>
-	    <p id="header-quote">Hi! Welcome to my website! Might not seem like much now, but not to worry, it's all still under construction. My projects page however is up and running so use the navbar on your left to get started!</p>
-	</div>
-	<div id="view-card-container">
-            <div class="view-card image-card">
-	        <img src="#">
-            </div>
-            <div class="view-card">
-	        <h4>Hi, welcome to my website!</h4>
-	        <p>Lorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sitr sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etcLorem ipsum dolor sit amet etc</p>
-            </div>
-	</div>
+    <div v-bind:class="isMobileContainer">
+        <div v-bind:class="isMobileHeader">
+            <p class="name">Fareed Idris</p>
+            <p class="header-quote">Hi! Welcome to my website! Might not seem like much now, but not to worry, it's all still under construction. My projects page however is up and running so use the navbar on your left to get started!</p>
+        </div>
+        <div class="m-tmp-div" v-if="this.$mq === 'phone'">
+            <p>EC2 Students! Submit Your Messages Here!</p>
+            <router-link to="Projects/EC2">
+                <BaseButton>Submit!</BaseButton>
+            </router-link>
+        </div>
     </div>
 </template>
 
 <style lang="scss">
 @import '~@/design/index.scss';
-#home-header{
+.home-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 20%;
-    #name {
+    .name {
         font-size: 40px;
-	font-weight: bold;
+        font-weight: bold;
     }
-    #header-quote {
+    .header-quote {
         text-align: center;
     }
 }
 
-#home-view-container {
+.m-home-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    .name {
+        font-size: 40px;
+        font-weight: bold;
+    }
+    .header-quote {
+        text-align: center;
+    }
+}
+
+.home-view-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,23 +70,39 @@ export default {
     padding-right: 10%;
 }
 
-#view-card-container {
-    display: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: auto;
+.m-home-view-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 93%;
     width: 100%;
-    .view-card {
+    margin-left: 0;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.m-tmp-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    text-align: center;
+    p {
+        font-weight: bold;
+        font-size: 20px;
+    }
+    a {
+        width: 100%;
         display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: 400px;
-	width: 40%;
-	border: 1px solid;
-	margin: 10px;
-	text-align: center;
-	border-radius: 20px;
-	@extend %shadow-normal;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        button {
+            width: 50%;
+        }
     }
 }
 </style>

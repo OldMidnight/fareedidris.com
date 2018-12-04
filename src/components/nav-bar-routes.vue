@@ -1,23 +1,42 @@
 <script>
-const BaseLink = 'BaseLink'
-
 export default {
     functional: true,
     props: {
         routes: {
             type: Array,
             required: true
+        },
+        mq: {
+            type: String,
+            required: true
+        }
+    },
+    computed: {
+        isMobile: function() {
+            return this.$mq === 'phone' ? true : false
+        },
+        isMobileDiv: function() {
+            return this.$mq === 'phone' ? 'm-link-div' : 'link-div'
         }
     },
     render(h, { props = {} }) {
         function getRouteTitle(route) {
-        return typeof route.title === 'function' ? route.title() : route.title
-    }
-    return props.routes.map(route => (
-        <router-link class="link-div" v-bind="$attrs" key={route.name} to={route}>
-            <p class="link-p">{getRouteTitle(route)}</p>
-        </router-link>
-    ))
+            return typeof route.title === 'function' ? route.title() : route.title
+        }
+    if (props.mq === 'phone') {
+            return props.routes.map(route => (
+                <router-link v-bind="$attrs" class="m-link-div" key={route.name} to={route}>
+                <font-awesome-icon icon={route.icon}></font-awesome-icon>
+                    <p>{getRouteTitle(route)}</p>
+                </router-link>
+            ))
+    } else {
+            return props.routes.map(route => (
+                <router-link v-bind="$attrs" class="link-div" key={route.name} to={route}>
+                    <p class="link-p">{getRouteTitle(route)}</p>
+                </router-link>
+            ))
+        }
     }
 }
 </script>
@@ -32,6 +51,23 @@ export default {
     line-height: 45px;
 }
 
+.m-link-div {
+    height: 100%;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p {
+        font-size: 10px;
+        margin: 0;
+    }
+}
+
+.m-link-div:hover {
+    @extend %shadow-normal;
+}
+
 .link-div:hover {
     @extend %shadow-normal;
 }
@@ -39,5 +75,12 @@ export default {
 .link-p {
     width: 100%;
     height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .link-div {
+        height: 100%;
+        width: 10%;
+    }
 }
 </style>
