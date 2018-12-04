@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.47d7513bf72ae89b9236efdcae407951.js"
+  "/precache-manifest.e569e4f3e50d05754138bb31b1112294.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "fareed-website-client"});
+workbox.core.setCacheNameDetails({prefix: "fareedidrisClient"});
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to

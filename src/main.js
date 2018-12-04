@@ -15,11 +15,11 @@ import VueMq from 'vue-mq'
 Vue.use(Vuelidate)
 Vue.use(VueMq, {
         breakpoints: {
-	    phone: 600,
-	    laptop: 1200,
-	    other: Infinity
-	}
-    })
+        phone: 600,
+        laptop: 1200,
+        other: Infinity
+    }
+})
 library.add(faSpinner, faGithub, faTelegram, faLinkedin, faTwitter, faHome, faBookOpen, faFolderOpen)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
