@@ -110,8 +110,7 @@ export default {
 
 .m-sidenav-container {
     z-index: 10;
-    position: fixed;
-    top: 93%;
+    position: relative;
     display: flex;
     width: 100%;
     height: 7%;

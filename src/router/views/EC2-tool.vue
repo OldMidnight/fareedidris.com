@@ -146,7 +146,15 @@ export default {
                     })
                 }
             }
-        }
+        },
+        inFocus: function(e) {
+            var ele = e.target
+            ele.classList.add('selected')
+        },
+        outFocus: function() {
+            var ele = document.querySelector('.selected')
+            ele.classList.remove('selected')
+	}
     }
 }
 </script>
@@ -167,16 +175,16 @@ export default {
                                 <input type="checkbox" name="is_anon" v-model="creds.is_anon">
                             </div>
                         </div>
-                        <input type="number" name="student_num" v-if="creds.is_anon === false" v-model.number="creds.student_num" placeholder="Student Number..." maxlength=8 required>
-                        <input type="email" name="student_email" v-if="creds.is_anon === false" v-model="creds.student_email" placeholder="Student Email..." required>
+                        <input type="number" name="student_num" @focus="inFocus($event)" @blur="outFocus()" v-if="creds.is_anon === false" v-model.number="creds.student_num" placeholder="Student Number..." maxlength=8 required>
+                        <input type="email" name="student_email" v-if="creds.is_anon === false" @focus="inFocus($event)" @blur="outFocus()" v-model="creds.student_email" placeholder="Student Email..." required>
                         <select v-model.number="creds.lecturer_id">
                             <option disabled value="">Please select one</option>
                             <option v-for="option in lecturer_options" :value="option.value" :key="option.value">
                                 {{ option.text }}
                             </option>
                         </select>
-                        <input type="text" name="message_subject" placeholder="Message Subject..." v-model="creds.message_subject" required>
-                        <textarea name="message" v-model="creds.message" placeholder="Your Message..." required></textarea>
+                        <input type="text" name="message_subject" placeholder="Message Subject..." @focus="inFocus($event)" @blur="outFocus()" v-model="creds.message_subject" required>
+                        <textarea name="message" v-model="creds.message" placeholder="Your Message..." @focus="inFocus($event)" @blur="outFocus()" required></textarea>
                         <div class="radio-input-container">
                             <div v-bind:class="isMobileRadio">
                                 <label for="urgent">Urgent Message</label>
@@ -342,8 +350,10 @@ textarea {
     opacity: 0.5;
 }
 
-.error {
-    border: 1px solid red;
+.selected {
+    transition: 0.5s;
+    border: 2px solid #0099ff;
+    box-shadow: 0 1px 3px rgba(0,128,255,0.12), 0 1px 2px rgba(0,64,255,0.24);
 }
 </style>
 
