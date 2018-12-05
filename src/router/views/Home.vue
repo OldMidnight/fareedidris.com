@@ -49,7 +49,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto;
+    height: 50%;
     .name {
         font-size: 40px;
         font-weight: bold;
@@ -79,6 +79,7 @@ export default {
     margin-left: 0;
     padding-left: 5%;
     padding-right: 5%;
+    overflow-y: auto;
 }
 
 .m-tmp-div {
@@ -88,7 +89,7 @@ export default {
     align-items: center;
     width: 100%;
     height: auto;
-    margin-top: 10px;
+    margin-top: 10%;
     text-align: center;
     p {
         font-weight: bold;

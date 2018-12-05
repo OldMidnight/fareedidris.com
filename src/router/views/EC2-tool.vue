@@ -213,7 +213,6 @@ export default {
 
 .m-tool-body {
     width: 100%;
-    height: 75%;
 }
 
 .radio-input-container {
@@ -255,7 +254,6 @@ textarea {
     align-items: center;
     width: 100%;
     height: 93%;
-    overflow-y: auto;
 }
 
 .tool-wrapper {
@@ -276,8 +274,10 @@ textarea {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    overflow-y: auto;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .tool-header {
@@ -294,7 +294,6 @@ textarea {
     align-items: center;
     text-align: center;
     width: 100%;
-    height: 15%;
     padding-top: 20px;
     h3 {
         margin: 0;
@@ -334,7 +333,6 @@ textarea {
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 10%;
     p {
         font-size: 8px;
         color: #767676;
