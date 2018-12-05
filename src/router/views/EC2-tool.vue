@@ -351,7 +351,6 @@ textarea {
 }
 
 .selected {
-    transition: 0.5s;
     border: 2px solid #0099ff;
     box-shadow: 0 1px 3px rgba(0,128,255,0.12), 0 1px 2px rgba(0,64,255,0.24);
 }
