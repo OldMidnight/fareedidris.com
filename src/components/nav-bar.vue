@@ -40,6 +40,9 @@ export default {
         isMobileSocial: function() {
             return this.$mq === 'phone' ? 'm-social-bar' : 'social-bar'
         },
+        isMobileRoutes: function() {
+            return this.$mq === 'phone' ? 'm-nav-routes' : 'nav-routes'
+        }
     }
 }
 </script>
@@ -51,7 +54,9 @@ export default {
                 <p>Fareed Idris</p>
             </div>
         </router-link>
-        <NavBarRoutes :routes="persistentNavRoutes" :mq="this.$mq" />
+        <div v-bind:class="isMobileRoutes">
+            <NavBarRoutes :routes="persistentNavRoutes" :mq="this.$mq" />
+        </div>
         <div v-bind:class="isMobileSocial">
             <h3>Find Me On:</h3>
             <div id="github" class="icon" @mouseover="hovered['github'] = true" @mouseout="hovered['github'] = false">
@@ -96,21 +101,19 @@ export default {
 
 .sidenav-container {
     z-index: 10;
-    position: fixed;
+    position: relative;
     display: flex;
-    width: 10%;
-    height: 100%;
-    flex-direction: column;
+    width: 100%;
     align-items: center;
-    overflow-x: hidden;
     transition: 0.5s;
-    border-right: 2px solid #e6e6e6;
-    background-color: white;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #e6e6e6;
 }
 
 .m-sidenav-container {
     z-index: 10;
-    position: relative;
+    position: fixed;
+    top: 93%;
     display: flex;
     width: 100%;
     height: 7%;
@@ -126,8 +129,9 @@ export default {
 .sidenav-header-a {
     padding: 0;
     margin: 0;
-    width: 100%;
-    @extend %center-column-div;
+    margin-left: 10%;
+    width: 50%;
+    display: flex;
 }
 
 .m-sidenav-header-a {
@@ -136,25 +140,28 @@ export default {
 
 #sidenav-header {
     text-align: center;
-    border: 1px solid;
-    border-radius: 25px;
-    background-color: $color-button-bg;
-    margin: 10px;
-    width: 80%;
-    padding: 0 20px 0 20px;
     p {
         font-size: 16px;
-        color: $color-button-text;
     }
 }
 
-#sidenav-header {
-    @extend %shadow-small;
-    cursor: pointer;
+.nav-routes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.m-nav-routes {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .social-bar {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;

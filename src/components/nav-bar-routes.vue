@@ -45,10 +45,9 @@ export default {
 @import '~@/design/index.scss';
 
 .link-div {
-    width: 100%;
+    width: 33%;
     text-align: center;
     height: 70px;
-    line-height: 45px;
 }
 
 .m-link-div {
@@ -73,14 +72,6 @@ export default {
 }
 
 .link-p {
-    width: 100%;
-    height: 100%;
-}
-
-@media only screen and (max-width: 600px) {
-    .link-div {
-        height: 100%;
-        width: 10%;
-    }
+    color: black;
 }
 </style>

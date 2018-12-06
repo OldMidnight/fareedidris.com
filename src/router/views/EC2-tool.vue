@@ -84,7 +84,6 @@ export default {
             if (this.creds.is_anon) {
                 this.creds.student_num = 11111111
                 this.creds.student_email = 'anonymous@mail.dcu.ie'
-                console.log(this.creds.student_num, this.creds.student_email)
             } else {
                 this.creds.student_num = ''
                 this.creds.student_email = ''
@@ -107,21 +106,16 @@ export default {
             this.message_added = 'initial'
         },
         sendMessage: function() {
-            console.log('sending to api')
-            console.log(this.creds.student_num, this.creds.student_email)
             this.message_added = 'processing'
 
             this.$v.$touch()
 
             if (this.$v.$invalid) {
                 this.message_added = 'failed'
-                console.log('send failed')
-                console.log(this.$v)
             } else {
                 if (this.message_added === 'processing') {
                 api.post('validate', this.creds)
                     .then((response) => {
-                        console.log(response)
                         if (response.data.added) {
                             this.message_added = 'added'
                         } else {
@@ -130,15 +124,10 @@ export default {
                     })
                     .catch((error) => {
                         var errors = error.response.data
-                        console.log(errors.length)
                         if (Object.keys(errors).length > 0) {
-                            console.log('sdgsdfgasdfgasd')
                             for (var key in errors) {
                                 if (errors.hasOwnProperty(key)) {
-                                    console.log(errors[key])
-                                    console.log(this.api_errors)
                                     this.api_errors[key] = errors[key]
-                                    console.log(this.api_errors)
                                 }
                             }
                         }
@@ -198,7 +187,7 @@ export default {
                     </div>
                     <div class="tool-body-container" key="added" v-else>
                         <h3>Message Added</h3>
-                        <BaseButton @click="resetMessage()">Send New Message</BaseButton>
+                        <BaseButton @click="resetMessage()">New Message</BaseButton>
                     </div>
                 </transition>
             </div>
@@ -216,7 +205,6 @@ export default {
 
 .tool-body {
     width: 100%;
-    height: 100%;
 }
 
 .m-tool-body {
@@ -248,12 +236,11 @@ textarea {
 }
 
 .view-container {
-    margin-left: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 90%;
+    width: 100%;
 }
 
 .m-view-container {
@@ -265,12 +252,10 @@ textarea {
 }
 
 .tool-wrapper {
-    height: 90%;
-    width: 45%;
-    padding: 5%;
+    width: 40%;
+    padding: 1%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     border: 1px solid;
     border-radius: %border-rounded-large;
@@ -316,15 +301,11 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
 }
 
 
 .tool-footer {
     display: flex;
-    margin-top: 10px;
-    padding-left: 20%;
-    padding-right: 20%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
