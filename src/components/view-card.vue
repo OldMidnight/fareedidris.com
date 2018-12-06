@@ -26,6 +26,10 @@ export default {
         route: {
             type: Object,
             required: false
+        },
+        aHref: {
+            type: String,
+            required: false
         }
     },
     methods: {
@@ -58,7 +62,9 @@ export default {
             this.viewSelected = true
             var btns = document.getElementsByClassName('learn-more-btn')
             for (var i = 0; i < btns.length; i++) {
-                btns[i].style.opacity = '0.5';
+                if (btns[i] !== e.target) {
+                    btns[i].style.opacity = '0.5';
+                }
             }
         },
         deselect: function(e) {
@@ -107,8 +113,8 @@ export default {
         </div>
         <div v-bind:class="isMobileCardBody">
             <p class="card-desc">{{ cardBody }}</p>
-            <BaseLink @click="deselect($event)" tag="button" :key="this.route.name" :to="this.route">
-                {{ buttonBodyText }}
+            <BaseLink @click="deselect($event)" tag="button" :key="this.route.name" :to="this.route" :href="this.aHref">
+                <span>{{ buttonBodyText }}</span>
             </BaseLink>
         </div>
     </div>
@@ -179,8 +185,37 @@ export default {
         padding: 0;
         cursor: pointer;
         transition: 0.5s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span {
+            color: white;
+        }
     }
     button:hover {
+        @extend %shadow-small;
+    }
+    a {
+        background-color: $color-button-bg;
+        height: 50px;
+        color: $color-button-text;
+        border-radius: $border-rounded-large;
+        width: 40%;
+        margin-top: 10px;
+        border: 1px solid blue;
+        padding: 0;
+        cursor: pointer;
+        transition: 0.5s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span {
+            color: white;
+        }
+    }
+    a:hover {
         @extend %shadow-small;
     }
 }
@@ -202,8 +237,39 @@ export default {
         padding: 0;
         cursor: pointer;
         transition: 0.5s;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span {
+            color: white;
+        }
     }
     button:hover {
+        @extend %shadow-small;
+    }
+    a {
+        background-color: $color-button-bg;
+        color: $color-button-text;
+        border-radius: $border-rounded-large;
+        height: 40px;
+        width: 70%;
+        margin-top: 10px;
+        border: 1px solid blue;
+        padding: 0;
+        cursor: pointer;
+        transition: 0.5s;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span {
+            color: white;
+        }
+    }
+    a:hover {
         @extend %shadow-small;
     }
 }
@@ -215,16 +281,20 @@ export default {
     border-radius: 20px;
     @extend %shadow-large;
     top: 5%;
+    z-index: 10;
 }
 
 .m-card-selected {
-    height: auto;
+    height: 75%;
     position: fixed;
     background-color: white;
-    border-radius: 20px;
+    border-radius: 5px;
     @extend %shadow-large;
-    top: 5%;
-    font-size: 13px;
-
+    font-size: 15px;
+    justify-content: initial;
+    z-index: 10;
+    overflow-y: auto;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 </style>
