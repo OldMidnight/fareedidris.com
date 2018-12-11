@@ -7,7 +7,16 @@ export default {
         },
         isMobileHeader: function() {
             return this.$mq === 'phone' ? 'm-home-header' : 'home-header'
-        }
+        },
+    isMobileSocialContainer: function() {
+        return this.$mq === 'phone' ? 'm-social-container' : 'social-container'
+    },
+    isMobileSocialWrapper: function() {
+        return this.$mq === 'phone' ? 'm-social-wrapper' : 'social-wrapper'
+    },
+    isMobileSocialDiv: function() {
+        return this.$mq === 'phone' ? 'm-social-div' : 'social-div'
+    }
     }
 }
 </script>
@@ -30,6 +39,27 @@ export default {
                 <BaseButton>Submit!</BaseButton>
             </router-link>
         </div>
+    <div v-bind:class="isMobileSocialContainer">
+        <h3>Find Me On:</h3>
+        <div v-bind:class="isMobileSocialWrapper">
+                <a href="https://github.com/OldMidnight" target="_blank" v-bind:class="isMobileSocialDiv" id="github">
+                <font-awesome-icon :icon="['fab', 'github']" size="2x"></font-awesome-icon>
+            <p>Github</p>
+        </a>
+            <a href="https://www.linkedin.com/in/fareed-idris-96a710162" target="_blank" v-bind:class="isMobileSocialDiv" id="linkedin">
+            <font-awesome-icon :icon="['fab', 'linkedin']" size="2x"></font-awesome-icon>
+            <p>LinkedIn</p>
+                </a>
+            <a href="https://t.me/OldMid" target="_blank" v-bind:class="isMobileSocialDiv" id="telegram">
+            <font-awesome-icon :icon="['fab', 'telegram']" size="2x"></font-awesome-icon>
+            <p>Telegram</p>
+        </a>
+            <a href="https://twitter.com/fareed_idris?s=09" target="_blank" v-bind:class="isMobileSocialDiv" id="twitter">
+            <font-awesome-icon :icon="['fab', 'twitter']" size="2x"></font-awesome-icon>
+            <p>Twitter</p>
+        </a>
+        </div>
+    </div>
     </div>
 </template>
 
@@ -126,4 +156,92 @@ export default {
         }
     }
 }
+
+.social-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin-top: 5%;
+}
+
+.m-social-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.social-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.m-social-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.social-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+    p {
+        margin: 0;
+        margin-top: 10px;
+    }
+}
+
+.m-social-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    cursor: pointer;
+    tarnsition: 0.5s;
+    border-radius: 20px;
+    margin: 5px;
+    p {
+        margin: 0;
+        margin-top: 10px;
+    }
+}
+
+.social-div:hover, .m-social-div:hover {
+    @extend %shadow-normal;
+}
+
+#github {
+    border: 2px solid #6cc644;
+    background-color: #6cc644;
+}
+
+#telegram {
+    border: 2px solid #0088cc;
+    background-color: #0088cc;
+}
+
+#twitter {
+    border: 2px solid #1da1f2;
+    background-color: #1da1f2;
+}
+
+#linkedin {
+    border: 2px solid #e68523;
+    background-color: #e68523;
+}
+
 </style>
