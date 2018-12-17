@@ -8,15 +8,15 @@ export default {
         isMobileHeader: function() {
             return this.$mq === 'phone' ? 'm-home-header' : 'home-header'
         },
-    isMobileSocialContainer: function() {
-        return this.$mq === 'phone' ? 'm-social-container' : 'social-container'
-    },
-    isMobileSocialWrapper: function() {
-        return this.$mq === 'phone' ? 'm-social-wrapper' : 'social-wrapper'
-    },
-    isMobileSocialDiv: function() {
-        return this.$mq === 'phone' ? 'm-social-div' : 'social-div'
-    }
+        isMobileSocialContainer: function() {
+            return this.$mq === 'phone' ? 'm-social-container' : 'social-container'
+        },
+        isMobileSocialWrapper: function() {
+            return this.$mq === 'phone' ? 'm-social-wrapper' : 'social-wrapper'
+        },
+        isMobileSocialDiv: function() {
+            return this.$mq === 'phone' ? 'm-social-div' : 'social-div'
+        }
     }
 }
 </script>
@@ -203,6 +203,30 @@ export default {
     }
 }
 
+#github {
+    border: 2px solid #6cc644;
+    background-color: #6cc644;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+#telegram {
+    border: 2px solid #0088cc;
+    background-color: #0088cc;
+}
+
+#twitter {
+    border: 2px solid #1da1f2;
+    background-color: #1da1f2;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#linkedin {
+    border: 2px solid #e68523;
+    background-color: #e68523;
+}
+
 .m-social-div {
     display: flex;
     flex-direction: column;
@@ -222,26 +246,6 @@ export default {
 
 .social-div:hover, .m-social-div:hover {
     @extend %shadow-normal;
-}
-
-#github {
-    border: 2px solid #6cc644;
-    background-color: #6cc644;
-}
-
-#telegram {
-    border: 2px solid #0088cc;
-    background-color: #0088cc;
-}
-
-#twitter {
-    border: 2px solid #1da1f2;
-    background-color: #1da1f2;
-}
-
-#linkedin {
-    border: 2px solid #e68523;
-    background-color: #e68523;
 }
 
 </style>
