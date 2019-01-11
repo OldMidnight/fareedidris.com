@@ -9,18 +9,31 @@ export default {
     name: 'midnightcore',
     data() {
         return {
-	    uploadedFiles: [],
 	    uploadError: null,
 	    currentStatus: null,
-	    uploadFieldName: 'fonts',
 	    file: {
-	        name: '',
-		type: '',
-		currentName: '',
-		currentType: '',
+	        name: null,
+		type: null,
+		currentName: null,
+		currentType: null,
 		nameChecked: false,
-		nameTaken: false
+		nameTaken: false,
+		ignore_similar: false
 	    },
+	    variants: [
+	        { name: 'regular', uploaded: false, text: 'Regular Variant' },
+		{ name: 'bold', uploaded: false, text: 'Bold Variant' },
+		{ name: 'italic', uploaded: false, text: 'Italic Variant' },
+		{ name: 'light', uploaded: false, text: 'Light Variant' },
+		{ name: 'condensed', uploaded: false, text: 'Condensed Variant' },
+		{ name: 'black', uploaded: false, text: 'Black Variant' }
+	    ],
+	    available_to_modify: null,
+	    file_error: {
+	        error: false,
+		message: null,
+		names: []
+	    }
 	}
     },
     computed: {
@@ -35,6 +48,9 @@ export default {
 	},
 	isFailed() {
 	    return this.currentStatus === STATUS_FAILED
+	},
+	isWarning() {
+	    return this.available_to_modify === false
 	}
     },
     validations: {
@@ -51,24 +67,25 @@ export default {
     methods: {
         reset() {
 	    this.currentStatus = STATUS_INITIAL
-	    this.uploadedFiles = []
 	    this.uploadError = null
+	    console.log(this.currentStatus)
 	},
 	save(formData) {
-	    this.currentStatus = STATUS_SAVING
 	    upload(formData)
 	        .then(x => {
-		    this.uploadedFiles = [].concat(x)
-		    this.currentStatus = STATUS_SUCCESS		    
+		    console.log('x:', x)
+		    this.currentStatus = 2
 		})
 		.catch(err => {
 		    this.uploadError = err.response
-		    this.currentStatus = STATUS_FAILED
 		})
 	},
 	filesChange(fieldName, fileList) {
 	    const formData = new FormData()
 	    if (!fileList.length) return
+
+	    if (this.file.type === 'MidnightFonts' && fileList[0].size > 1500000) return
+	    if (this.file.type === 'MidnightMedia' && fileList[0].size > 45000000) return
 
 	    Array
 	        .from(Array(fileList.length).keys())
@@ -76,20 +93,55 @@ export default {
 		    formData.append(fieldName, fileList[x], fileList[x].name)
 		})
 
+            formData.append('file_name', this.file.name)
+	    formData.append('file_type', this.file.type)
+
+	    console.log('size: ', fileList[0].size)
+	    console.log('formData: ', formData)
+	    this.currentStatus = STATUS_SAVING
 	    this.save(formData)
 	},
 	checkName() {
-	    console.log(this.file.name)
+	    this.currentStatus = STATUS_SAVING
 	    this.$v.$touch()
 	    if (this.$v.$invalid) {
 	        console.log('wrong')
 	    } else {
 	        this.resetFile()
+		this.resetFileError()
 	        api.post('midnightcore/setName', this.file)
 		    .then((response) => {
-		        console.log(response)
-			if (response.data.exists === false) {
+	                this.currentStatus = STATUS_INITIAL
+			if (response.data.error) {
+			    this.file_error.error = true
+			    this.file_error.message = response.data.error_message
+			    this.file_error.names = response.data.names_list
+			} else if (response.data.exists) {
+			    this.file.nameTaken = true
 			    this.file.nameChecked = true
+			    this.file.currentName = this.file.name
+			    this.file.currentType = this.file.type
+			    this.available_to_modify = false
+			} else if (response.data.exists === false && response.data.error === false) {
+			    this.file.nameChecked = true
+	                    this.currentStatus = STATUS_SAVING
+			    api.post('midnightcore/getStatus', this.file)
+			        .then((response) => {
+	                            this.currentStatus = STATUS_INITIAL
+				    console.log(response)
+				    if (this.file.type === 'MidnightMedia') {
+				        if (response.data.available_to_edit) {
+					    this.available_to_modify = true
+					} else {
+					    this.available_to_modify = false
+					}
+				    }
+				    this.resetFileError()
+				})
+				.catch((error) => {
+	                            this.currentStatus = STATUS_INITIAL
+				    console.log(error)
+				})
 			} else {
 			    this.file.nameTaken = true
 			    this.file.nameChecked = true
@@ -99,6 +151,7 @@ export default {
 		    })
 		    .catch((error) => {
 		        console.log(error)
+	                this.currentStatus = STATUS_INITIAL
 		    })
 	    }
 	},
@@ -106,6 +159,11 @@ export default {
 	    this.file.nameChecked = false
 	    this.file.nameTaken = false
 	},
+	resetFileError() {
+	    this.file_error.error = false
+	    this.file_error.message = null
+	    this.file_error.names = []
+	}
     },
     mounted() {
         this.reset()
@@ -121,20 +179,41 @@ export default {
 	        <div class="tool-desc wrapper-item">
 		    <h4>How To Use:</h4>
 		    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non velit in purus sollicitudin dignissim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed id felis vel sem sollicitudin consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam purus mi, congue sed ligula non, elementum dictum velit. Curabitur leo odio, convallis a ante ac, pellentesque auctor dui. Donec tempor sapien ac risus congue maximus. In id lacinia urna. Morbi venenatis tincidunt mauris eget ullamcorper. Quisque eu est et lorem ultricies suscipit. Nulla feugiat vulputate lacinia.</p>
+		    <div class="tool-checklist" v-if="file.type === 'MidnightFonts'">
+		        <h4>Weights Checklist:</h4>
+			<div v-for="variant in variants" :key="variant.name">
+			    <p>{{ variant.text }}</p>
+			</div>
+		    </div>
+		    <div class="tool-checklist" v-if="file_error.names.length > 0">
+		        <h4>Similar Names:</h4>
+			<div v-for="name in file_error.names" :key="name">
+			    <p>{{ name }}</p>
+			</div>
+			<BaseButton @click="file.ignore_similar = true; checkName()" :class="{ disable: isSaving }">Continue?</BaseButton>
+		    </div>
 		</div>
 	        <div class="wrapper-item">
 	            <h4>Upload Files</h4>
 		    <div class="dropbox">
-			<select v-model="file.type" @change="resetFile()">
+			<select v-model="file.type" @change="resetFile()" :class="{ disable: isSaving }">
 			    <option disabled value="">Choose File Type</option>
 			    <option value="MidnightFonts">MidnightFonts</option>
 			    <option value="MidnightMedia">MidnightMedia</option>
 			</select>
-			<input type="text" name="name_check" v-model="file.name" @input="resetFile()" placeholder="Name Of Your File">
-			<BaseButton @click="checkName()" v-if="file.nameChecked === false && file.nameTaken === false">Check Name</BaseButton>
-			<input type="file" multiple :name="uploadFieldName" :id="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".ttf" class="input-file">
-			<label :for="uploadFieldName" v-if="file.nameChecked !== false && file.nameTaken !== true">Choose a file</label>
-			<p v-if="isSaving">Uploading..</p>
+			<input type="text" name="name_check" v-model="file.name" @input="resetFile(); available_to_modify = null" placeholder="Name Of Your File" class="name-input" :class="{ disable: isSaving, warning: isWarning }">
+			<BaseButton @click="checkName()" v-if="file.nameChecked === false || file.nameTaken === true || available_to_modify === false || file_error.error === true" :class="{ disable: isSaving }">Check Name</BaseButton>
+			<form enctype="multipart/form-data" novalidate v-else>
+			    <input v-if="file.type === 'MidnightFonts'" type="file" multiple name="uploadField" id="uploadField" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)" accept=".ttf, font/ttf" class="input-file">
+			    <input v-if="file.type === 'MidnightMedia'" type="file" multiple name="uploadField" id="uploadField" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)" accept=".zip, application/zip" class="input-file">
+			    <label for="uploadField" v-if="available_to_modify" :class="{ disable: isSaving }">Choose a file</label>
+			</form>
+			<div v-if="file_error.error">
+			    <p>Error Occured: {{ file_error.message }} !</p>
+			</div>
+			<div v-if="isWarning">
+			    <p>Warning: File Already Exists!</p>
+			</div>
 		    </div>
 	        </div>
 	    </div>
@@ -144,6 +223,23 @@ export default {
 
 <style lang="scss">
 @import '~@/design/index.scss';
+
+.disable {
+    opacity: 0.5;
+}
+
+.name-input {
+    height: 50px;
+    border-radius: 10px;
+    padding-left: 10px;
+    border: 1px solid;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.warning {
+    background-color: #ffcc80;
+    border: 1px solid #ff9900;
+}
 
 .view-container {
     display: flex;
