@@ -114,7 +114,7 @@ export default {
                 this.message_added = 'failed'
             } else {
                 if (this.message_added === 'processing') {
-                api.post('validate', this.creds)
+                api.post('ec2/validate', this.creds)
                     .then((response) => {
                         if (response.data.added) {
                             this.message_added = 'added'
@@ -132,6 +132,7 @@ export default {
                             }
                         }
                         this.message_added = 'failed'
+			this.resetMessage()
                     })
                 }
             }

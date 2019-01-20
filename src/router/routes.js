@@ -20,6 +20,11 @@ export default [
 	component: () => import('@/router/views/EC2-tool')
     },
     {
+        path: '/MidnightCore',
+	name: 'minightcore',
+	component: () => import('@/router/views/MidnightCore-tool')
+    },
+    {
         path: '/404',
         name: '404',
         component: () => require('@/router/views/_404').default,
