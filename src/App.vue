@@ -23,7 +23,6 @@ export default {
 <style lang="scss">
 * {
     box-sizing: border-box;
-    color: black;
     outline: none;
     font-family: 'Open Sans', sans-serif;
 }
@@ -45,10 +44,11 @@ body {
 
 #app {
     height: 100%;
-    widthe: 100%;
+    width: 100%;
 }
 
 a {
     text-decoration: none;
+    color: black;
 }
 </style>

@@ -69,7 +69,6 @@ export default {
     align-items: center;
     transition: 0.5s;
     justify-content: space-evenly;
-    border-bottom: 1px solid #e6e6e6;
 }
 
 .m-sidenav-container {
@@ -112,6 +111,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 50%;
+    height: 100%;
 }
 
 .m-nav-routes {

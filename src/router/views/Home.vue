@@ -99,8 +99,8 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 .m-home-view-container {
@@ -235,7 +235,7 @@ export default {
     width: 100%;
     padding: 20px;
     cursor: pointer;
-    tarnsition: 0.5s;
+    transition: 0.5s;
     border-radius: 20px;
     margin: 5px;
     p {

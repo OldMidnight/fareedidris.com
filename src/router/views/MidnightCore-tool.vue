@@ -255,7 +255,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 75%;
-    pdding: 5%;
+    padding: 5%;
     border: 1px solid;
 }
 

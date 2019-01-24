@@ -7,14 +7,16 @@ export default {
         return {
             creds: {
                 is_anon: false,
-                student_num: '',
-                student_email: '',
-                lecturer_id: '',
-                message_subject: '',
-                message: '',
+                student_num: null,
+                student_email: null,
+                lecturer_id: null,
+                message_subject: null,
+                message: null,
                 urgent: false
             },
             message_added: 'initial',
+            password_valid: 'initial',
+            password: null,
             lecturer_options: [
                 { text: "Rob Brennan: CA222 - Enterprise Information Systems", value: 1 },
                 { text: "Stephen Blott: CA277 - Programming Fundamentals II", value: 2 },
@@ -23,11 +25,11 @@ export default {
                 { text: "Renaat Verbruggen: CA228 - Systems Analysis/Business Systems Analysis", value: 5 }
             ],
             api_errors: {
-                student_num: '',
-                student_email: '',
-                lecturer_id: '',
-                message_subject: '',
-                message: '',
+                student_num: null,
+                student_email: null,
+                lecturer_id: null,
+                message_subject: null,
+                message: null,
             }
         }
     },
@@ -144,14 +146,37 @@ export default {
         outFocus: function() {
             var ele = document.querySelector('.selected')
             ele.classList.remove('selected')
-	}
+        },
+        validatePassword: function() {
+            this.password_valid = 'validating'
+            api.post('ec2/validatePassword', this.password)
+                .then((response) => {
+                    if (response.data.valid) {
+                        this.password_valid = 'valid'
+                    } else {
+                        this.password_valid = 'failed'
+                    }
+                })
+                .catch((error) => {
+                    this.password_valid = 'failed'
+                    console.log(error)
+                })
+        }
     }
 }
 </script>
 
 <template>
     <div v-bind:class="isMobileView">
-        <div v-bind:class="isMobileToolWrapper">
+        <div class="tool-password" v-if="password_valid === 'initial' || password_valid === 'failed'">
+            <h4>Enter Today's Password:</h4>
+            <input type="password" placeholder="Password..." v-model="password">
+            <BaseButton @click="validatePassword()" v-if="password_valid === 'initial' || password_valid === 'failed'">Check Password</BaseButton>
+            <BaseButton v-else-if="password_valid === 'validating'" class="blur">
+                <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
+            </BaseButton>
+        </div>
+        <div v-bind:class="isMobileToolWrapper" v-else>
             <div v-bind:class="isMobileToolHeader">
                 <h3>Unnamed EC2 Lecturer Communication Tool</h3>
                 <p>Fill in the form below to send a message to a lecturer</p>
@@ -204,6 +229,14 @@ export default {
 @import '~@/design/index.scss';
 @import '~animate.css/animate.min.css';
 
+.tool-password {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .tool-body {
     width: 100%;
 }
@@ -222,7 +255,7 @@ export default {
     }
 }
 
-input[type=number], input[type=text], input[type=email], select {
+input[type=number], input[type=text], input[type=email], input[type=password], select {
     height: 50px;
     width: 75%;
     margin: 5px;
@@ -234,6 +267,7 @@ textarea {
     height: 200px;
     margin: 5px;
     padding-left: 10px;
+    padding-top: 10px;
 }
 
 .view-container {
@@ -258,8 +292,7 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid;
-    border-radius: %border-rounded-large;
+    border-radius: $border-rounded-normal;
     @extend %shadow-large;
 }
 

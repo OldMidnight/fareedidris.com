@@ -46,8 +46,11 @@ export default {
 
 .link-div {
     width: 33%;
-    text-align: center;
-    height: 70px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .m-link-div {
@@ -73,5 +76,7 @@ export default {
 
 .link-p {
     color: black;
+    margin: 0;
+
 }
 </style>
