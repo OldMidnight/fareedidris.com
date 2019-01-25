@@ -16,13 +16,13 @@ export default [
     },
     {
         path: '/Projects/EC2',
-	    name: 'ec2',
-	    component: () => import('@/router/views/EC2-tool')
+        name: 'ec2',
+        component: () => import('@/router/views/EC2-tool')
     },
     //{
     //    path: '/MidnightCore',
-	//    name: 'minightcore',
-	//    component: () => import('@/router/views/MidnightCore-tool')
+    //    name: 'minightcore',
+    //    component: () => import('@/router/views/MidnightCore-tool')
     //},
     {
         path: '/404',

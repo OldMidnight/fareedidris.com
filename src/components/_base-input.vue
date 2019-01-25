@@ -2,30 +2,30 @@
 export default {
     props: {
         value: {
-	    type: [String, Number],
-	    default: ''
-   	}
+            type: [String, Number],
+            default: ''
+        }
     },
     data() {
-	return {
-  	    isSelected: false
-	}
+        return {
+            isSelected: false
+        }
     },
     methods: {
-	select: function() {
-	    this.isSelected = true;
-	},
-	deselect: function() {
-		this.isSelected = false;
-	}
+        select: function() {
+            this.isSelected = true;
+        },
+        deselect: function() {
+            this.isSelected = false;
+        }
     },
     computed: {
-	listeners() {
-	    return {
-		...this.$listeners,
-		input: event => this.$emit('input', event.target.value)
-	    }
-	}
+        listeners() {
+            return {
+                ...this.$listeners,
+                input: event => this.$emit('input', event.target.value)
+            }
+        }
     }
 }
 </script>

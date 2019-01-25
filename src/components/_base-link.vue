@@ -21,45 +21,45 @@ export default {
             type: Object,
             default: () => ({})
         },
-	def_class: {
-	    type: String
-	}
+        def_class: {
+            type: String
+        }
     },
     computed: {
         routerLinkTo({ name, params }) {
-        return {
-            name,
-        params,
-        ...(this.to || {})
+            return {
+                name,
+                params,
+                ...(this.to || {})
+            }
         }
-    }
     },
     created() {
         this.validateProps()
     },
     methods: {
         validateProps() {
-        if (process.env.NODE_ENV === 'production') return
+            if (process.env.NODE_ENV === 'production') return
 
-        if (this.href) {
-            if (!/^\w+:/.test(this.href)) {
-            return console.warn(
-                "Invalid <BaseLink> href: ${this.href}.\nIf you're trying to link to a local URL, provide at least a name."
-            )
+            if (this.href) {
+                if (!/^\w+:/.test(this.href)) {
+                    return console.warn(
+                        "Invalid <BaseLink> href: ${this.href}.\nIf you're trying to link to a local URL, provide at least a name."
+                    )
+                }
+                if (!this.allowInsecure && !/^https/.test(this.href)) {
+                    return console.warn(
+                        "Insecure <BaseLink> href: ${this.href}.\nWhen linking to external sites, always prefer https URLs. If this site does not offer SSL, explicitly add the allow-insecure attribute on <BaseLink>."
+                    )
+                }
+            } else {
+                if (!this.name && !this.to) {
+                    return console.warn(
+                        "Invalid <BaseLink> props:\n\n${JSON.stringify(this.$props, null, 2)}\n\nEither a 'name' or 'to' is required for internal links, or an 'href' for external links."
+                    )
+                }
+            }
         }
-        if (!this.allowInsecure && !/^https/.test(this.href)) {
-            return console.warn(
-                "Insecure <BaseLink> href: ${this.href}.\nWhen linking to external sites, always prefer https URLs. If this site does not offer SSL, explicitly add the allow-insecure attribute on <BaseLink>."
-            )
-        }
-        } else {
-        if (!this.name && !this.to) {
-            return console.warn(
-            "Invalid <BaseLink> props:\n\n${JSON.stringify(this.$props, null, 2)}\n\nEither a 'name' or 'to' is required for internal links, or an 'href' for external links."
-            )
-        }
-        }
-    }
     }
 }
 </script>

@@ -16,13 +16,16 @@ export default {
             },
             message_added: 'initial',
             password_valid: 'initial',
-            password: null,
+            password_data: {
+                password: null,
+            },
+            password_accepted: false,
             lecturer_options: [
-                { text: "Rob Brennan: CA222 - Enterprise Information Systems", value: 1 },
-                { text: "Stephen Blott: CA277 - Programming Fundamentals II", value: 2 },
-                { text: "Alistair Sutherland: CA200 - Quantitative Analysis For Business Decisions", value: 3 },
-                { text: "Jane Kernan: CA227 - Business Databases Management I", value: 4 },
-                { text: "Renaat Verbruggen: CA228 - Systems Analysis/Business Systems Analysis", value: 5 }
+                { text: "Jane Kernan: CA227B - Business Database Management II", value: 1 },
+                { text: "John McKenna: CA229 - Developing Internet Applications", value: 2 },
+                { text: "Brian Stone: CA249 - Enterprise Computer Systems Configuration", value: 3 },
+                { text: "Jennifer Foster: CA278 - Programming Fundamentals III", value: 4 },
+                { text: "Rory O'Connor: CA279 - Professional Practice for Enterprise Computing", value: 5 }
             ],
             api_errors: {
                 student_num: null,
@@ -36,24 +39,6 @@ export default {
     computed: {
         returnAnon: function() {
             return this.creds.is_anon
-        },
-        isMobileView: function() {
-            return this.$mq === 'phone' ? 'm-view-container' : 'view-container'
-        },
-        isMobileToolWrapper: function() {
-            return this.$mq === 'phone' ? 'm-tool-wrapper' : 'tool-wrapper'
-        },
-        isMobileToolHeader: function() {
-            return this.$mq === 'phone' ? 'm-tool-header' : 'tool-header'
-        },
-        isMobileToolBody: function() {
-            return this.$mq === 'phone' ? 'm-tool-body' : 'tool-body'
-        },
-        isMobileToolFooter: function() {
-            return this.$mq === 'phone' ? 'm-tool-footer' : 'tool-footer'
-        },
-        isMobileRadio: function() {
-            return this.$mq === 'phone' ? 'm-radio-input' : 'radio-input'
         }
     },
     validations: {
@@ -93,6 +78,9 @@ export default {
         }
     },
     methods: {
+        isMobileElement: function(class_name) {
+            return this.$mq === 'phone' ? 'm-' + class_name : class_name
+        },
         resetMessage: function() {
             this.creds.is_anon = false
             this.creds.student_num = ''
@@ -149,17 +137,17 @@ export default {
         },
         validatePassword: function() {
             this.password_valid = 'validating'
-            api.post('ec2/validatePassword', this.password)
+            api.post('ec2/validatePassword', this.password_data)
                 .then((response) => {
                     if (response.data.valid) {
                         this.password_valid = 'valid'
+                        this.password_accepted = true
                     } else {
                         this.password_valid = 'failed'
                     }
                 })
                 .catch((error) => {
                     this.password_valid = 'failed'
-                    console.log(error)
                 })
         }
     }
@@ -167,60 +155,62 @@ export default {
 </script>
 
 <template>
-    <div v-bind:class="isMobileView">
-        <div class="tool-password" v-if="password_valid === 'initial' || password_valid === 'failed'">
-            <h4>Enter Today's Password:</h4>
-            <input type="password" placeholder="Password..." v-model="password">
-            <BaseButton @click="validatePassword()" v-if="password_valid === 'initial' || password_valid === 'failed'">Check Password</BaseButton>
-            <BaseButton v-else-if="password_valid === 'validating'" class="blur">
-                <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
-            </BaseButton>
-        </div>
-        <div v-bind:class="isMobileToolWrapper" v-else>
-            <div v-bind:class="isMobileToolHeader">
-                <h3>Unnamed EC2 Lecturer Communication Tool</h3>
-                <p>Fill in the form below to send a message to a lecturer</p>
+    <div v-bind:class="isMobileElement('view-container')">
+        <transition name="tool-password-anim" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight slow" mode="out-in">
+            <div v-bind:class="isMobileElement('tool-password')" v-if="password_valid === 'initial' && password_accepted === false || password_valid === 'failed' && password_accepted === false">
+                <h4>Enter Today's Password:</h4>
+                <input type="password" placeholder="Password..." v-model="password_data.password">
+                <BaseButton @click="validatePassword()" v-if="password_valid === 'initial' || password_valid === 'failed'">Check Password</BaseButton>
+                <BaseButton v-else-if="password_valid === 'validating'" class="blur">
+                    <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
+                </BaseButton>
             </div>
-            <div v-bind:class="isMobileToolBody">
-                <transition name="tool-body-anim" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight slow" mode="out-in">
-                    <div class="tool-body-container" key="added_initial" v-if="this.message_added !== 'added'" :class="{ blur: message_added === 'processing'}">
-                        <div class="radio-input-container">
-                            <div v-bind:class="isMobileRadio">
-                                <label for="is_anon">Send Anonymously*</label>
-                                <input type="checkbox" name="is_anon" v-model="creds.is_anon">
+            <div v-bind:class="isMobileElement('tool-wrapper')" v-if="password_accepted === true">
+                <div v-bind:class="isMobileElement('tool-header')">
+                    <h3>Unnamed EC2 Lecturer Communication Tool</h3>
+                    <p>Fill in the form below to send a message to a lecturer</p>
+                </div>
+                <div v-bind:class="isMobileElement('tool-body')">
+                    <transition name="tool-body-anim" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight slow" mode="out-in">
+                        <div class="tool-body-container" key="added_initial" v-if="this.message_added !== 'added'" :class="{ blur: message_added === 'processing'}">
+                            <div class="radio-input-container">
+                                <div v-bind:class="isMobileElement('radio-input')">
+                                    <label for="is_anon">Send Anonymously*</label>
+                                    <input type="checkbox" name="is_anon" v-model="creds.is_anon">
+                                </div>
                             </div>
-                        </div>
-                        <input type="number" name="student_num" @focus="inFocus($event)" @blur="outFocus()" v-if="creds.is_anon === false" v-model.number="creds.student_num" placeholder="Student Number..." maxlength=8 required>
-                        <input type="email" name="student_email" v-if="creds.is_anon === false" @focus="inFocus($event)" @blur="outFocus()" v-model="creds.student_email" placeholder="Student Email..." required>
-                        <select v-model.number="creds.lecturer_id">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="option in lecturer_options" :value="option.value" :key="option.value">
-                                {{ option.text }}
-                            </option>
-                        </select>
-                        <input type="text" name="message_subject" placeholder="Message Subject..." @focus="inFocus($event)" @blur="outFocus()" v-model="creds.message_subject" required>
-                        <textarea name="message" v-model="creds.message" placeholder="Your Message..." @focus="inFocus($event)" @blur="outFocus()" required></textarea>
-                        <div class="radio-input-container">
-                            <div v-bind:class="isMobileRadio">
-                                <label for="urgent">Urgent Message</label>
-                                <input type="checkbox" name="urgent" v-model="creds.urgent">
+                            <input type="number" name="student_num" @focus="inFocus($event)" @blur="outFocus()" v-if="creds.is_anon === false" v-model.number="creds.student_num" placeholder="Student Number..." maxlength=8 required>
+                            <input type="email" name="student_email" v-if="creds.is_anon === false" @focus="inFocus($event)" @blur="outFocus()" v-model="creds.student_email" placeholder="Student Email..." required>
+                            <select v-model.number="creds.lecturer_id">
+                                <option disabled value="">Please select one</option>
+                                <option v-for="option in lecturer_options" :value="option.value" :key="option.value">
+                                    {{ option.text }}
+                                </option>
+                            </select>
+                            <input type="text" name="message_subject" placeholder="Message Subject..." @focus="inFocus($event)" @blur="outFocus()" v-model="creds.message_subject" required>
+                            <textarea name="message" v-model="creds.message" placeholder="Your Message..." @focus="inFocus($event)" @blur="outFocus()" required></textarea>
+                            <div class="radio-input-container">
+                                <div v-bind:class="isMobileElement('radio-element')">
+                                    <label for="urgent">Urgent Message</label>
+                                    <input type="checkbox" name="urgent" v-model="creds.urgent">
+                                </div>
                             </div>
+                            <BaseButton @click="sendMessage()" v-if="message_added === 'initial' || message_added === 'failed'">Send Message</BaseButton>
+                            <BaseButton v-else-if="message_added === 'processing'" class="blur">
+                                <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
+                            </BaseButton>
                         </div>
-                        <BaseButton @click="sendMessage()" v-if="message_added === 'initial' || message_added === 'failed'">Send Message</BaseButton>
-                        <BaseButton v-else-if="message_added === 'processing'" class="blur">
-                            <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
-                        </BaseButton>
-                    </div>
-                    <div class="tool-body-container" key="added" v-else>
-                        <h3>Message Added</h3>
-                        <BaseButton @click="resetMessage()">New Message</BaseButton>
-                    </div>
-                </transition>
+                        <div class="tool-body-container" key="added" v-else>
+                            <h3>Message Added</h3>
+                            <BaseButton @click="resetMessage()">New Message</BaseButton>
+                        </div>
+                    </transition>
+                </div>
+                <div v-bind:class="isMobileElement('tool-footer')">
+                    <p>* - Message that are sent anonymously will be viewed by myself to ensure it complies with DCU's email guidelines. Messages not sent anonymously will not be viewed by me but will go through validation for syntax and punctuation errors.</p>
+                </div>
             </div>
-            <div v-bind:class="isMobileToolFooter">
-                <p>* - Message that are sent anonymously will be viewed by myself to ensure it complies with DCU's email guidelines. Messages not sent anonymously will not be viewed by me but will go through validation for syntax and punctuation errors.</p>
-            </div>
-        </div>
+        </transition>
     </div>
 </template>
 
@@ -235,6 +225,22 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+.m-tool-password {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    button {
+        width: 100%;
+    }
+    input {
+        text-align: center;
+    }
 }
 
 .tool-body {
