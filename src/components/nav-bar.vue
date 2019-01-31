@@ -1,12 +1,18 @@
 <script>
 
 export default {
+    props: {
+        isMobile: {
+            type: Boolean,
+            default: false
+        }
+    },
 }
 </script>
 
 <template>
     <v-toolbar>
-        <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
+        <v-toolbar-side-icon v-if="isMobile" @click.stop="$emit('toggleDrawer')"></v-toolbar-side-icon>
         <v-toolbar-title><router-link to="/" style="color: black;">Fareed Idris</router-link></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">

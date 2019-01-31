@@ -22,20 +22,14 @@ export default {
 </script>
 
 <template>
-    <div v-bind:class="isMobileContainer">
+    <v-layout column align-center v-bind:class="isMobileContainer">
         <div v-bind:class="isMobileHeader">
             <p class="name">Fareed Idris</p>
-            <p class="header-quote">Hi! Welcome to my website! Here you can find some projects I've been working on, find my resume and get in touch with me!</p>
+            <p class="header-quote">Hi! Welcome to my website! Here you can find some projects I've been working on, my resume and get in touch with me!</p>
             <div class="text-xs-center">
                 <h4>EC2 Students! Submit messages here!</h4>
                 <router-link to="Projects/EC2"><v-btn round color="info" outline>Submit</v-btn></router-link>
             </div>
-        </div>
-        <div class="m-tmp-div" v-if="this.$mq === 'phone'">
-            <p>EC2 Students! Submit Your Messages Here!</p>
-            <router-link to="Projects/EC2">
-                <BaseButton>Submit!</BaseButton>
-            </router-link>
         </div>
     <div v-bind:class="isMobileSocialContainer">
         <h3 style="margin-bottom: 1%;">Find Me On:</h3>
@@ -58,7 +52,7 @@ export default {
         </a>
         </div>
     </div>
-    </div>
+    </v-layout>
 </template>
 
 <style lang="scss">
@@ -238,6 +232,7 @@ export default {
     transition: 0.5s;
     border-radius: 20px;
     margin: 5px;
+    color: black;
     p {
         margin: 0;
         margin-top: 10px;

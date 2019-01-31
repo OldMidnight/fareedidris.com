@@ -17,8 +17,9 @@ export default {
         <div id="app">
             <Layout>
                 <router-view :key="$route.fullPath" />
-	        </Layout>
-            <v-footer class="pa-3">
+            </Layout>
+            <v-footer class="pa-3" style="margin-top: 1%;">
+                <div>Fareed Idris</div>
                 <v-spacer></v-spacer>
                 <div>&copy; {{ new Date().getFullYear() }}</div>
             </v-footer>

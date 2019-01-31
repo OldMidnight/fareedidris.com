@@ -1,12 +1,5 @@
 <script>
-import { mixin as clickaway } from 'vue-clickaway'
 export default {
-    mixins: [ clickaway ],
-    data() {
-        return {
-            dialog: false
-        }
-    },
     props: {
         cardName: {
             type: String,
@@ -37,54 +30,9 @@ export default {
             required: false
         }
     },
-    methods: {
-        closeCard: function() {
-            if (this.viewSelected) {
-                var c;
-                if (this.$mq === 'phone') {
-                    c = document.querySelector('.m-card-selected')
-                    c.classList.remove('m-card-selected')
-                } else {
-                    c = document.querySelector('.card-selected')
-                    c.classList.remove('card-selected')
-                }
-                document.body.style.backgroundColor = "white"
-                this.viewSelected = false
-            }
-            var btns = document.getElementsByClassName('learn-more-btn')
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].style.opacity = '1';
-            }
-        },
-        select: function(e) {
-            var parentEl = e.target.parentElement.parentElement
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)"
-            if (this.$mq === 'phone') {
-                parentEl.classList.add('m-card-selected')
-            } else {
-                parentEl.classList.add('card-selected')
-            }
-            this.viewSelected = true
-            var btns = document.getElementsByClassName('learn-more-btn')
-            for (var i = 0; i < btns.length; i++) {
-                if (btns[i] !== e.target) {
-                    btns[i].style.opacity = '0.5';
-                }
-            }
-        },
-        deselect: function(e) {
-            var el = e.target.parentElement.parentElement
-            document.body.style.backgroundColor = "white"
-            if (this.$mq === 'phone') {
-                el.classList.remove('m-card-selected')
-            } else {
-                el.classList.remove('card-selected')
-            }
-            this.viewSelected = false
-        }
-    },
     data() {
         return {
+            dialog: false,
             viewSelected: false,
         }
     },
@@ -117,6 +65,7 @@ export default {
                         <v-divider></v-divider>
                         <v-card-actions>
                             <v-spacer></v-spacer>
+                            <v-btn color="primary" flat @click="dialog = false" v-if="this.$mq === 'phone'">Close</v-btn>
                             <BaseLink :to="this.route" :href="this.aHref" :key="this.route.name">
                                 <v-btn color="primary" flat @click="dialog = false">{{ buttonBodyText }}</v-btn>
                             </BaseLink>
@@ -150,8 +99,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 80%;
-    margin: 30px;
-    padding: 2%;
+    padding-top: 5%;
     text-align: center;
     transition: 0.5s;
     border-top: 1px solid #e6e6e6;

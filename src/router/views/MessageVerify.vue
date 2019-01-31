@@ -37,7 +37,7 @@ export default {
                 .then((response) => {
                     this.messages = response.data.messages
                     this.messages.forEach(message => {
-                        this.validated_messages.push({validated: false, m_id: message.id})
+                        this.validated_messages.push({validated: false, m_id: message.m_id})
                     });
                 })
                 .catch((error) => {
@@ -66,7 +66,9 @@ export default {
         sendValidated: function() {
             api.post('ec2/admin/set_validated', this.validated_messages)
                 .then((response) => {
-                    location.reload()
+                    if(response.data.updated) {
+                        location.reload()
+                    }
                 })
                 .catch((error) => {
                     console.log(error)
@@ -78,30 +80,42 @@ export default {
 </script>
 
 <template>
-    <div class="message-view-wrapper">
-        <div class="password-input" v-if="!password_verified">
-            <v-flex xs12 sm6 d-flex>
-                <v-select :items="message_type_options" label="Select Option..." outline v-model="message_data.type"></v-select>
-            </v-flex>
-            <v-flex xs12 sm6 md3>
-                <v-text-field label="Password" placeholder="Password..." outline type="password" v-model="verify.password"></v-text-field>
-            </v-flex>
-            <v-btn color="success" @click="checkPassword()">Submit</v-btn>
-        </div>
-        <div class="message-view-container" v-else>
-            <div v-for="message in messages" :key="message.m_id">
-                <h4>Subject: {{ message.subject }}</h4>
-                <h5>To: {{ lecturers[message.lecturer_id] }}</h5>
-                <p>Message: {{ message.body }}</p>
-                <input type="checkbox" @change="sortValidation(message.m_id)">
-            </div>
-            <v-btn @click="sendValidated()" color="success">Submit</v-btn>
-        </div>
-    </div>
+    <v-content>
+        <v-container fluid fill-height v-if="!password_verified">
+            <v-layout column align-center justify-center>
+                <v-flex :xs12="this.$mq !== 'phone'" :xs1="this.$mq === 'phone'" sm1 d-flex>
+                    <v-select :items="message_type_options" label="Select Option..." outline v-model="message_data.type"></v-select>
+                </v-flex>
+                <v-flex :xs12="this.$mq !== 'phone'" :xs1="this.$mq === 'phone'" sm1>
+                    <v-text-field label="Password" placeholder="Password..." outline type="password" v-model="verify.password"></v-text-field>
+                </v-flex>
+                <v-btn color="success" @click="checkPassword()">Submit</v-btn>
+            </v-layout>
+        </v-container>
+        <v-container fluid fill-height v-else>
+            <v-layout column align-center justify-center>
+                <v-flex xs12 sm2 v-for="message in messages" class="message_box" :key="message.m_id">
+                    <h4>Subject: {{ message.subject }}</h4>
+                    <h5>To: {{ lecturers[message.lecturer_id] }}</h5>
+                    <p>Message: {{ message.body }}</p>
+                    <v-checkbox label="Validate" @change="sortValidation(message.m_id)"></v-checkbox>
+                </v-flex>
+                <v-btn @click="sendValidated()" color="success">Submit</v-btn>
+            </v-layout>
+        </v-container>
+    </v-content>
 </template>
 
 <style lang="scss">
 @import '~@/design/index.scss';
+
+.message_box {
+    width: 75%;
+    border: 2px solid;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
 
 .message-view-wrapper {
     display: flex;
