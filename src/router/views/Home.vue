@@ -25,12 +25,10 @@ export default {
     <div v-bind:class="isMobileContainer">
         <div v-bind:class="isMobileHeader">
             <p class="name">Fareed Idris</p>
-            <p class="header-quote">Hi! Welcome to my website! Might not seem like much now, but not to worry, it's all still under construction. My projects page however is up and running so use the navbar to get started!</p>
-            <div class="tmp-div" v-if="this.$mq !== 'phone'">
-                <h3>EC2 Students! Submit your messages Here!</h3>
-                <router-link to="Projects/EC2">
-                    <BaseButton>Submit!</BaseButton>
-                </router-link>
+            <p class="header-quote">Hi! Welcome to my website! Here you can find some projects I've been working on, find my resume and get in touch with me!</p>
+            <div class="text-xs-center">
+                <h4>EC2 Students! Submit messages here!</h4>
+                <router-link to="Projects/EC2"><v-btn round color="info" outline>Submit</v-btn></router-link>
             </div>
         </div>
         <div class="m-tmp-div" v-if="this.$mq === 'phone'">
@@ -40,7 +38,7 @@ export default {
             </router-link>
         </div>
     <div v-bind:class="isMobileSocialContainer">
-        <h3>Find Me On:</h3>
+        <h3 style="margin-bottom: 1%;">Find Me On:</h3>
         <div v-bind:class="isMobileSocialWrapper">
                 <a href="https://github.com/OldMidnight" target="_blank" v-bind:class="isMobileSocialDiv" id="github">
                 <font-awesome-icon :icon="['fab', 'github']" size="2x"></font-awesome-icon>
@@ -98,6 +96,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100%;
     padding-left: 15%;
     padding-right: 15%;
@@ -123,13 +122,13 @@ export default {
     width: 50%;
     margin-top: 5%;
     text-align: center;
-    a {
+    /*a {
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    }
+    }*/
 }
 
 .m-tmp-div {
@@ -197,6 +196,7 @@ export default {
     padding: 20px;
     cursor: pointer;
     transition: 0.5s;
+    color: black;
     p {
         margin: 0;
         margin-top: 10px;

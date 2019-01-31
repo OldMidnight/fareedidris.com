@@ -19,6 +19,11 @@ export default [
         name: 'ec2',
         component: () => import('@/router/views/EC2-tool')
     },
+    {
+        path: '/admin/EC2',
+        name: 'admin-ec2',
+        component: () => import('@/router/views/MessageVerify')
+    },
     //{
     //    path: '/MidnightCore',
     //    name: 'minightcore',

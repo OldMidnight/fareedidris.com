@@ -33,8 +33,16 @@ export default {
                 lecturer_id: null,
                 message_subject: null,
                 message: null,
-            }
+            },
+            dialog: false
         }
+    },
+    watch: {
+      dialog (val) {
+        if (!val) return
+
+        setTimeout(() => (this.dialog = false), 4000)
+      }
     },
     computed: {
         returnAnon: function() {
@@ -97,12 +105,16 @@ export default {
         },
         sendMessage: function() {
             this.message_added = 'processing'
+            console.log('0')
 
             this.$v.$touch()
-
+            console.log('1')
+            console.log(this.creds.is_anon, this.creds.student_num, this.creds.student_email, this.creds.lecturer_id, this.creds.message_subject, this.creds.message, this.creds.urgent)
             if (this.$v.$invalid) {
                 this.message_added = 'failed'
+                console.log('2')
             } else {
+                console.log('3')
                 if (this.message_added === 'processing') {
                 api.post('ec2/validate', this.creds)
                     .then((response) => {
@@ -155,69 +167,83 @@ export default {
 </script>
 
 <template>
-    <div v-bind:class="isMobileElement('view-container')">
+    <v-content>
         <transition name="tool-password-anim" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight slow" mode="out-in">
-            <div v-bind:class="isMobileElement('tool-password')" v-if="password_valid === 'initial' && password_accepted === false || password_valid === 'failed' && password_accepted === false">
-                <h4>Enter Today's Password:</h4>
-                <input type="password" placeholder="Password..." v-model="password_data.password">
-                <BaseButton @click="validatePassword()" v-if="password_valid === 'initial' || password_valid === 'failed'">Check Password</BaseButton>
-                <BaseButton v-else-if="password_valid === 'validating'" class="blur">
-                    <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
-                </BaseButton>
-            </div>
-            <div v-bind:class="isMobileElement('tool-wrapper')" v-if="password_accepted === true">
-                <div v-bind:class="isMobileElement('tool-header')">
-                    <h3>Unnamed EC2 Lecturer Communication Tool</h3>
-                    <p>Fill in the form below to send a message to a lecturer</p>
-                </div>
-                <div v-bind:class="isMobileElement('tool-body')">
-                    <transition name="tool-body-anim" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight slow" mode="out-in">
-                        <div class="tool-body-container" key="added_initial" v-if="this.message_added !== 'added'" :class="{ blur: message_added === 'processing'}">
-                            <div class="radio-input-container">
-                                <div v-bind:class="isMobileElement('radio-input')">
-                                    <label for="is_anon">Send Anonymously*</label>
-                                    <input type="checkbox" name="is_anon" v-model="creds.is_anon">
-                                </div>
-                            </div>
-                            <input type="number" name="student_num" @focus="inFocus($event)" @blur="outFocus()" v-if="creds.is_anon === false" v-model.number="creds.student_num" placeholder="Student Number..." maxlength=8 required>
-                            <input type="email" name="student_email" v-if="creds.is_anon === false" @focus="inFocus($event)" @blur="outFocus()" v-model="creds.student_email" placeholder="Student Email..." required>
-                            <select v-model.number="creds.lecturer_id">
-                                <option disabled value="">Please select one</option>
-                                <option v-for="option in lecturer_options" :value="option.value" :key="option.value">
-                                    {{ option.text }}
-                                </option>
-                            </select>
-                            <input type="text" name="message_subject" placeholder="Message Subject..." @focus="inFocus($event)" @blur="outFocus()" v-model="creds.message_subject" required>
-                            <textarea name="message" v-model="creds.message" placeholder="Your Message..." @focus="inFocus($event)" @blur="outFocus()" required></textarea>
-                            <div class="radio-input-container">
-                                <div v-bind:class="isMobileElement('radio-element')">
-                                    <label for="urgent">Urgent Message</label>
-                                    <input type="checkbox" name="urgent" v-model="creds.urgent">
-                                </div>
-                            </div>
-                            <BaseButton @click="sendMessage()" v-if="message_added === 'initial' || message_added === 'failed'">Send Message</BaseButton>
-                            <BaseButton v-else-if="message_added === 'processing'" class="blur">
-                                <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
-                            </BaseButton>
-                        </div>
-                        <div class="tool-body-container" key="added" v-else>
-                            <h3>Message Added</h3>
-                            <BaseButton @click="resetMessage()">New Message</BaseButton>
-                        </div>
-                    </transition>
-                </div>
-                <div v-bind:class="isMobileElement('tool-footer')">
-                    <p>* - Message that are sent anonymously will be viewed by myself to ensure it complies with DCU's email guidelines. Messages not sent anonymously will not be viewed by me but will go through validation for syntax and punctuation errors.</p>
-                </div>
-            </div>
+            <v-container fluid fill-height v-if="password_valid === 'initial' && password_accepted === false || password_valid === 'failed' && password_accepted === false">
+                <v-layout column align-center justify-center>
+                    <h3 style="margin-bottom: 1%;">Enter Today's Password:</h3>
+                    <v-flex xs8 sm1>
+                        <v-text-field type="password" label="Password" outline v-model="password_data.password"></v-text-field>
+                    </v-flex>
+                    <v-btn color="info" @click="validatePassword()" v-if="password_valid === 'initial' || password_valid === 'failed'">Check Password</v-btn>
+                </v-layout>
+            </v-container>
+            <v-container fluid fill-heigt v-if="password_accepted === true">
+                <v-layout align-center justify-center>
+                    <v-flex xs12 sm8 md5>
+                        <v-card class="elevation-6">
+                            <v-layout column align-center style="padding-top: 10px;">
+                                <v-toolbar-title>EC2 Automated Messenger</v-toolbar-title>
+                                <p>Fill in the form below to send a message to a lecturer</p>
+                            </v-layout>
+                            <v-layout column align-center>
+                                <!-- IS ANON CHECK -->
+                                <v-checkbox :label="`Anonymous: ${creds.is_anon.toString()}`" v-model="creds.is_anon"></v-checkbox>
+                                <!-- STUDENT NUMBER -->
+                                <v-flex class="form-input" xs12 sm12 d-flex>
+                                    <v-text-field label="Student Number" outline type="text" v-if="creds.is_anon === false" v-model.number="creds.student_num" required></v-text-field>
+                                </v-flex>
+                                <!-- STUDENT EMAIL -->
+                                <v-flex class="form-input" xs12 sm12 d-flex>
+                                    <v-text-field label="Student Email" outline type="email" v-if="creds.is_anon === false" v-model.number="creds.student_email" required></v-text-field>
+                                </v-flex>
+                                <!-- LECTURER SELECT -->
+                                <v-flex class="form-input" xs12 sm12 d-flex>
+                                    <v-select :items="lecturer_options" label="Lecturers" outline v-model="creds.lecturer_id"></v-select>
+                                </v-flex>
+                                <!-- MESSAGE SUBJECT -->
+                                <v-flex class="form-input" xs12 sm12 d-flex>
+                                    <v-text-field label="Message Subject" outline type="text" v-model="creds.message_subject" required></v-text-field>
+                                </v-flex>
+                                <!-- MESSAGE -->
+                                <v-flex class="form-input" xs12 sm12 d-flex>
+                                    <v-textarea outline name="message" label="Your Message..." required v-model="creds.message"></v-textarea>
+                                </v-flex>
+                                <v-checkbox :label="`Urgent Message: ${creds.urgent.toString()}`" v-model="creds.urgent"></v-checkbox>
+                            </v-layout>
+                            <v-layout column justify-center align-center>
+                                <v-btn color="info" @click="sendMessage(); dialog = true" :disabled="dialog" :loading="dialog" v-if="message_added === 'initial' || message_added === 'failed'">Send Message</v-btn>
+                                <v-btn color="info" v-else-if="message_added === 'processing'" class="blur">
+                                    <font-awesome-icon icon="spinner" size="lg" pulse></font-awesome-icon>
+                                </v-btn>
+                                <v-dialog v-model="dialog" hide-overlay persistent width="300">
+                                    <v-card color="primary" dark>
+                                        <v-card-text>
+                                            Submitting message...
+                                            <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-dialog>
+                                <v-flex>
+                                    <p style="padding: 10px; text-align: center; font-size: 12px; color: #767676;">* - Message that are sent anonymously will be viewed by myself to ensure it complies with DCU's email guidelines. Messages not sent anonymously will not be viewed by me but will go through validation for syntax and punctuation errors.</p>
+                                </v-flex>
+                            </v-layout>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </v-container>
         </transition>
-    </div>
+    </v-content>
 </template>
 
 
 <style lang="scss">
 @import '~@/design/index.scss';
 @import '~animate.css/animate.min.css';
+
+.form-input {
+    width: 65%;
+}
 
 .tool-password {
     width: 50%;
@@ -261,20 +287,12 @@ export default {
     }
 }
 
-input[type=number], input[type=text], input[type=email], input[type=password], select {
+/*input[type=number], input[type=text], input[type=email], input[type=password], select {
     height: 50px;
     width: 75%;
     margin: 5px;
     padding-left: 10px;
-}
-
-textarea {
-    width: 75%;
-    height: 200px;
-    margin: 5px;
-    padding-left: 10px;
-    padding-top: 10px;
-}
+}*/
 
 .view-container {
     display: flex;
@@ -293,7 +311,7 @@ textarea {
 }
 
 .tool-wrapper {
-    width: 40%;
+    width: 50%;
     padding: 1%;
     display: flex;
     flex-direction: column;
@@ -337,10 +355,8 @@ textarea {
 }
 
 .tool-body-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 

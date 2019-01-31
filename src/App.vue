@@ -13,11 +13,17 @@ export default {
 </script>
 
 <template>
-    <div id="app">
-        <Layout>
-            <router-view :key="$route.fullPath" />
-	</Layout>
-    </div>
+    <v-app>
+        <div id="app">
+            <Layout>
+                <router-view :key="$route.fullPath" />
+	        </Layout>
+            <v-footer class="pa-3">
+                <v-spacer></v-spacer>
+                <div>&copy; {{ new Date().getFullYear() }}</div>
+            </v-footer>
+        </div>
+    </v-app>
 </template>
 
 <style lang="scss">
@@ -43,7 +49,7 @@ body {
 }
 
 #app {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
 }
 

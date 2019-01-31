@@ -2,6 +2,11 @@
 import { mixin as clickaway } from 'vue-clickaway'
 export default {
     mixins: [ clickaway ],
+    data() {
+        return {
+            dialog: false
+        }
+    },
     props: {
         cardName: {
             type: String,
@@ -95,27 +100,30 @@ export default {
 </script>
 
 <template>
-    <div v-bind:class="isMobileCard" v-if="viewSelected === false">
+    <div v-bind:class="isMobileCard">
         <div class="view-card-header">
             <h3 class="card-name">{{ cardName }}</h3>
         </div>
         <div v-bind:class="isMobileCardBody">
             <p class="card-desc">{{ cardDescription }}</p>
-            <button class="learn-more-btn" @click="select($event)" type="button">{{ buttonText }}</button>
-        </div>
-    </div>
-    <div v-bind:class="isMobileCard" v-on-clickaway="closeCard" v-else>
-        <div class="view-card-close">
-            <font-awesome-icon icon="times" @click="closeCard" />
-        </div>
-        <div class="view-card-header">
-            <h3 class="card-name">{{ cardName }}</h3>
-        </div>
-        <div v-bind:class="isMobileCardBody">
-            <p class="card-desc">{{ cardBody }}</p>
-            <BaseLink @click="deselect($event)" tag="button" :key="this.route.name" :to="this.route" :href="this.aHref">
-                <span>{{ buttonBodyText }}</span>
-            </BaseLink>
+            <div class="text-xs-center">
+                <v-dialog v-model="dialog" width="500">
+                    <v-btn slot="activator" color="info" dark>Click Me</v-btn>
+                    <v-card>
+                        <v-card-title class="headline grey lighten-2" primary-title>{{ cardName }}</v-card-title>
+                        <v-card-text>
+                            {{ cardBody }}
+                        </v-card-text>
+                        <v-divider></v-divider>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <BaseLink :to="this.route" :href="this.aHref" :key="this.route.name">
+                                <v-btn color="primary" flat @click="dialog = false">{{ buttonBodyText }}</v-btn>
+                            </BaseLink>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </div>
         </div>
     </div>
 </template>
@@ -127,8 +135,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 450px;
-    width: 45%;
+    height: 100%;
+    width: 35%;
     margin: 30px;
     padding: 2%;
     @extend %shadow-normal;
