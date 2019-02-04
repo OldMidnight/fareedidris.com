@@ -15,10 +15,4 @@ const router = new VueRouter({
         }
     }*/
 })
-
-router.afterEach((to, from) => {
-    if (document.body.style.backgroundColor !== 'white') {
-        document.body.style.backgroundColor = 'white'
-    }
-})
 export default router

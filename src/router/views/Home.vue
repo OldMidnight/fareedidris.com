@@ -26,10 +26,6 @@ export default {
         <div v-bind:class="isMobileHeader">
             <p class="name">Fareed Idris</p>
             <p class="header-quote">Hi! Welcome to my website! Here you can find some projects I've been working on, my resume and get in touch with me!</p>
-            <div class="text-xs-center">
-                <h4>EC2 Students! Submit messages here!</h4>
-                <router-link to="Projects/EC2"><v-btn round color="info" outline>Submit</v-btn></router-link>
-            </div>
         </div>
     <div v-bind:class="isMobileSocialContainer">
         <h3 style="margin-bottom: 1%;">Find Me On:</h3>
