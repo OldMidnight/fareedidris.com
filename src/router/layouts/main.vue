@@ -35,9 +35,9 @@ export default {
         <v-navigation-drawer v-model="drawer" absolute temporary>
             <v-list class="pa-1">
                 <v-list-tile avatar>
-                    <v-list-tile-avatar @click="navigatePage('/')">
+                    <!-- <v-list-tile-avatar @click="navigatePage('/')">
                         <img src="#" @click="navigatePage('/')">
-                    </v-list-tile-avatar>
+                    </v-list-tile-avatar> -->
                     <v-list-tile-content @click="navigatePage('/')">
                         <v-list-tile-title @click="navigatePage('/')">Fareed Idris</v-list-tile-title>
                     </v-list-tile-content>

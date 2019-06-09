@@ -18,7 +18,7 @@ Vue.use(Vuetify)
 Vue.use(Vuelidate)
 Vue.use(VueMq, {
         breakpoints: {
-        phone: 600,
+        phone: 700,
         laptop: 1200,
         other: Infinity
     }

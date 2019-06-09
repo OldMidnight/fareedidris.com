@@ -14,12 +14,11 @@ export default {
             default: 'Click Here...'
         },
         cardBody: {
-            type: String,
-            default: ''
+            type: String
         },
         buttonBodyText: {
             type: String,
-            default: 'Click Here...'
+            required: false
         },
         route: {
             type: Object,
@@ -66,9 +65,10 @@ export default {
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="primary" flat @click="dialog = false" v-if="this.$mq === 'phone'">Close</v-btn>
-                            <BaseLink :to="this.route" :href="this.aHref" :key="this.route.name">
+                            <BaseLink :to="this.route" :href="this.aHref" :key="this.route.name" v-if="this.buttonBodyText !== 'Close'">
                                 <v-btn color="primary" flat @click="dialog = false">{{ buttonBodyText }}</v-btn>
                             </BaseLink>
+                            <v-btn v-else color="primary" flat @click="dialog = false">{{ buttonBodyText }}</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -84,7 +84,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 350px;
     width: 35%;
     margin: 30px;
     padding: 2%;
