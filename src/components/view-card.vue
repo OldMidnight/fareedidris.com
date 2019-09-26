@@ -59,7 +59,7 @@ export default {
         </div>
         <v-dialog v-model="dialog" width="500">
             <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title>Description</v-card-title>
+                <v-card-title class="headline grey lighten-2" primary-title>Project Description</v-card-title>
                 <v-divider></v-divider>
                 <v-card-text>{{ cardBody }}</v-card-text>
                 <v-divider></v-divider>
