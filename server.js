@@ -3,7 +3,7 @@ var path = require('path');
 var history = require('connect-history-api-fallback');
 var serveStatic = require('serve-static');
 
-app = express();
+var app = express();
 app.use(history());
 app.use(serveStatic(__dirname + "/dist"));
 
