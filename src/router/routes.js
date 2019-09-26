@@ -4,11 +4,11 @@ export default [
         name: 'home',
         component: () => import('@/router/views/Home')
     },
-    {
-        path: '/Blog',
-        name: 'blog',
-        component: () => import('@/router/views/Blog')
-    },
+    // {
+    //     path: '/Blog',
+    //     name: 'blog',
+    //     component: () => import('@/router/views/Blog')
+    // },
     {
         path: '/Projects',
         name: 'projects',

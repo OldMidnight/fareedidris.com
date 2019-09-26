@@ -3,7 +3,7 @@ export default {
     name: 'home',
     data() {
         return {
-            img_src: require('@/assets/avatar.jpg')
+            img_src: '#'// require('@/assets/avatar.jpg') 
         }
     },
     computed: {
@@ -63,8 +63,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~@/design/index.scss';
-
 .avatar-container {
     height: 250px;
     width: 250px;
@@ -266,7 +264,8 @@ export default {
 }
 
 .social-div:hover, .m-social-div:hover {
-    @extend %shadow-normal;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 </style>

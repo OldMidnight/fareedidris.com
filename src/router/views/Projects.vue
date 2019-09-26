@@ -85,8 +85,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~@/design/index.scss';
-
 .projects-view-container {
     display: flex;
     flex-direction: column;
