@@ -48,7 +48,7 @@ export default {
 
 <template>
     <div v-bind:class="isMobileCard">
-        <div class="view-card-header">
+        <div class="view-card-header mb-2">
             <h3 class="card-name">{{ cardName }}</h3>
         </div>
         <div v-bind:class="isMobileCardBody">

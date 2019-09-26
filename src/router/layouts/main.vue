@@ -30,7 +30,7 @@ export default {
     <v-container fill-height>
         <v-layout class="d-flex flex-column">
             <NavBar :isMobile="this.$mq === 'phone' ? true : false" v-on:toggleDrawer="drawer = !drawer" />
-            <transition name="layout-main" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight fast" mode="out-in">
+            <transition name="layout-main" enter-active-class="animated fadeIn faster" leave-active-class="animated fadeOut faster" mode="out-in">
                 <slot />
             </transition>
             
