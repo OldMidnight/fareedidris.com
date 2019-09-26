@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.2fdd3361dadfcbb5e32aae610209cfac.js"
+  "/precache-manifest.2d0bb98c6939ba6627ca4f7414e2542e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "fareedidrisClient"});

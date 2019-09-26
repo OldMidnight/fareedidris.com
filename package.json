@@ -49,5 +49,5 @@
     "vuetify-loader": "^1.0.5",
     "vue-cli-plugin-vuetify": "^0.5.0"
   },
-  "heroku-run-build-script": true
+  "heroku-run-build-script": false
 }

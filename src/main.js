@@ -12,7 +12,6 @@ import { faFolderOpen } from '@fortawesome/free-regular-svg-icons'
 import Vuelidate from 'vuelidate'
 import VueMq from 'vue-mq'
 import vuetify from '@/plugins/vuetify'
-import 'vuetify/dist/vuetify.min.css'
 
 // Vue.use(Vuetify)
 Vue.use(Vuelidate)
