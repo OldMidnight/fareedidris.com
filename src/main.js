@@ -11,10 +11,10 @@ import { faSpinner, faHome, faBookOpen, faTimes } from '@fortawesome/free-solid-
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons'
 import Vuelidate from 'vuelidate'
 import VueMq from 'vue-mq'
-import Vuetify from 'vuetify'
+import vuetify from '@/plugins/vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify)
+// Vue.use(Vuetify)
 Vue.use(Vuelidate)
 Vue.use(VueMq, {
         breakpoints: {
@@ -29,6 +29,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
 new Vue({
+  vuetify,
   router,
   store,
   render: h => h(App)

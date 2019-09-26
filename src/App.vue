@@ -18,14 +18,14 @@ export default {
             <Layout>
                 <router-view :key="$route.fullPath" />
             </Layout>
-            <v-footer class="pa-3" style="margin-top: 1%;">
+            <v-footer class="pa-3">
                 <div>Fareed Idris</div>
                 <v-spacer></v-spacer>
                 <div>&copy; {{ new Date().getFullYear() }}</div>
             </v-footer>
         </div>
     </v-app>
-</template>
+</template>                                                                                                                        m
 
 <style lang="scss">
 * {

@@ -107,8 +107,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~@/design/index.scss';
-
 .message_box {
     width: 75%;
     border: 2px solid;

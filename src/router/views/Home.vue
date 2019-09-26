@@ -1,7 +1,12 @@
 <script>
 export default {
-  name: 'home',
-  computed: {
+    name: 'home',
+    data() {
+        return {
+            img_src: require('@/assets/avatar.jpg')
+        }
+    },
+    computed: {
         isMobileContainer: function() {
             return this.$mq === 'phone' ? 'm-home-view-container' : 'home-view-container'
         },
@@ -16,13 +21,19 @@ export default {
         },
         isMobileSocialDiv: function() {
             return this.$mq === 'phone' ? 'm-social-div' : 'social-div'
-        }
+        },
+        isMobileAvatarContainer: function() {
+            return this.$mq === 'phone' ? 'm-avatar-container' : 'avatar-container'
+        },
     }
 }
 </script>
 
 <template>
-    <v-layout column align-center v-bind:class="isMobileContainer">
+    <v-layout column align-center v-bind:class="isMobileContainer" class="pt-9 mt-8">
+        <div class="elevation-2" :class="isMobileAvatarContainer">
+            <v-img class="avatar" :src="img_src"></v-img>
+        </div>
         <div v-bind:class="isMobileHeader">
             <p class="name">Fareed Idris</p>
             <p class="header-quote">Hi! Welcome to my website! Here you can find some projects I've been working on, my resume and get in touch with me!</p>
@@ -30,29 +41,48 @@ export default {
     <div v-bind:class="isMobileSocialContainer">
         <h3 style="margin-bottom: 1%;">Find Me On:</h3>
         <div v-bind:class="isMobileSocialWrapper">
-                <a href="https://github.com/OldMidnight" target="_blank" v-bind:class="isMobileSocialDiv" id="github">
+            <a href="https://github.com/OldMidnight" target="_blank" v-bind:class="isMobileSocialDiv" id="github">
                 <font-awesome-icon :icon="['fab', 'github']" size="2x"></font-awesome-icon>
-            <p>Github</p>
-        </a>
+                <p>Github</p>
+            </a>
             <a href="https://www.linkedin.com/in/fareed-idris-96a710162" target="_blank" v-bind:class="isMobileSocialDiv" id="linkedin">
-            <font-awesome-icon :icon="['fab', 'linkedin']" size="2x"></font-awesome-icon>
-            <p>LinkedIn</p>
-                </a>
+                <font-awesome-icon :icon="['fab', 'linkedin']" size="2x"></font-awesome-icon>
+                <p>LinkedIn</p>
+            </a>
             <a href="https://t.me/OldMid" target="_blank" v-bind:class="isMobileSocialDiv" id="telegram">
-            <font-awesome-icon :icon="['fab', 'telegram']" size="2x"></font-awesome-icon>
-            <p>Telegram</p>
-        </a>
+                <font-awesome-icon :icon="['fab', 'telegram']" size="2x"></font-awesome-icon>
+                <p>Telegram</p>
+            </a>
             <a href="https://twitter.com/fareed_idris?s=09" target="_blank" v-bind:class="isMobileSocialDiv" id="twitter">
-            <font-awesome-icon :icon="['fab', 'twitter']" size="2x"></font-awesome-icon>
-            <p>Twitter</p>
-        </a>
+                <font-awesome-icon :icon="['fab', 'twitter']" size="2x"></font-awesome-icon>
+                <p>Twitter</p>
+            </a>
         </div>
     </div>
     </v-layout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@/design/index.scss';
+
+.avatar-container {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+}
+
+.m-avatar-container {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
+
+.avatar {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
 .home-header {
     display: flex;
     flex-direction: column;
@@ -86,7 +116,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
     height: 100%;
     padding-left: 15%;
     padding-right: 15%;

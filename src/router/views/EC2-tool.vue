@@ -236,7 +236,6 @@ export default {
 
 
 <style lang="scss">
-@import '~@/design/index.scss';
 @import '~animate.css/animate.min.css';
 
 .form_input {
