@@ -36,7 +36,7 @@ export default {
         </div>
         <div v-bind:class="isMobileHeader">
             <p class="name">Fareed Idris</p>
-            <p class="header-quote">Hi! Welcome to my website! Here you can find some projects I've been working on, my resume and get in touch with me!</p>
+            <p class="header-quote">Hi, name is Fareed Idris and I am a university student and amateur Web developer. I am mostly interested in Backend API development, Python and Javascript. Here you can find some projects I've been working on, my resume and get in touch with me!</p>
         </div>
     <div v-bind:class="isMobileSocialContainer">
         <h3 style="margin-bottom: 1%;">Find Me On:</h3>
