@@ -64,16 +64,16 @@ self.__precacheManifest = [
     "url": "/js/chunk-vendors.aff9a967.js"
   },
   {
-    "revision": "a32fa1f27abbfa96ff2f79e1ade723d5",
-    "url": "/fonts/materialdesignicons-webfont.a32fa1f2.eot"
-  },
-  {
     "revision": "7ec5dab7e7ff250971d2ff50379778dc",
     "url": "/fonts/materialdesignicons-webfont.7ec5dab7.woff2"
   },
   {
     "revision": "a0d13d16cc2f3647680d9f1ff003f58b",
     "url": "/fonts/materialdesignicons-webfont.a0d13d16.woff"
+  },
+  {
+    "revision": "a32fa1f27abbfa96ff2f79e1ade723d5",
+    "url": "/fonts/materialdesignicons-webfont.a32fa1f2.eot"
   },
   {
     "revision": "3ac50b5b36eb2f11b000dce1792d0bb0",
@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/img/avatar.b3515c42.jpg"
   },
   {
-    "revision": "9ce29e83c857e4d02dd0d030887bb9ac",
+    "revision": "50489df0c69d111039b04fc23ec08d06",
     "url": "/index.html"
   },
   {
