@@ -3,7 +3,7 @@ export default {
     name: 'home',
     data() {
         return {
-            img_src: '#'// require('@/assets/avatar.jpg') 
+            img_src: require('@/assets/avatar.jpg')
         }
     },
     computed: {
