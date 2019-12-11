@@ -30,6 +30,11 @@ export default [
     //    component: () => import('@/router/views/MidnightCore-tool')
     //},
     {
+        path: '/Projects/DCU/CA357/ui_project',
+        name: 'ui_redesign',
+        component: () => import('@/router/views/dcu/CA357/ui_redesign')
+    },
+    {
         path: '/404',
         name: '404',
         component: () => require('@/router/views/_404').default,

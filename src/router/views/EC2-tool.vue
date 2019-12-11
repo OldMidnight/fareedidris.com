@@ -125,7 +125,7 @@ export default {
                         var errors = error.response.data
                         if (Object.keys(errors).length > 0) {
                             for (var key in errors) {
-                                if (errors.hasOwnProperty(key)) {
+                                if (errors.key) {
                                     this.api_errors[key] = errors[key]
                                 }
                             }

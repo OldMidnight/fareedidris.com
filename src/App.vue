@@ -15,10 +15,11 @@ export default {
 <template>
     <v-app>
         <div id="app">
-            <Layout>
+            <router-view v-if="$route.path === '/Projects/DCU/CA357/ui_project'" :key="$route.fullPath"></router-view>
+            <Layout v-else>
                 <router-view :key="$route.fullPath" />
             </Layout>
-            <v-footer class="pa-3">
+            <v-footer v-if="$route.path !== '/Projects/DCU/CA357/ui_project'" class="pa-3">
                 <div>Fareed Idris</div>
                 <v-spacer></v-spacer>
                 <div>&copy; {{ new Date().getFullYear() }}</div>

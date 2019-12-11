@@ -45,7 +45,7 @@ export default {
                 <font-awesome-icon :icon="['fab', 'github']" size="2x"></font-awesome-icon>
                 <p>Github</p>
             </a>
-            <a href="https://www.linkedin.com/in/fareed-idris-96a710162" target="_blank" v-bind:class="isMobileSocialDiv" id="linkedin">
+            <a href="https://www.linkedin.com/in/fareed-idris-2021" target="_blank" v-bind:class="isMobileSocialDiv" id="linkedin">
                 <font-awesome-icon :icon="['fab', 'linkedin']" size="2x"></font-awesome-icon>
                 <p>LinkedIn</p>
             </a>

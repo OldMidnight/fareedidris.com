@@ -52,16 +52,20 @@ export default {
             <h3 class="card-name">{{ cardName }}</h3>
         </div>
         <div v-bind:class="isMobileCardBody">
-            <p class="card-desc">{{ cardDescription }}</p>
+            <p class="card-desc">
+              <pre>{{ cardDescription }}</pre>
+            </p>
             <div class="text-xs-center pb-5">
                 <v-btn color="info" @click="dialog = true" dark>{{ buttonText }}</v-btn>
             </div>
         </div>
-        <v-dialog v-model="dialog" width="500">
+        <v-dialog v-model="dialog" width="500" scrollable>
             <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title>Project Description</v-card-title>
+                <v-card-title class="headline" primary-title>Project Description</v-card-title>
                 <v-divider></v-divider>
-                <v-card-text>{{ cardBody }}</v-card-text>
+                <v-card-text>
+                  <pre>{{ cardBody }}</pre>
+                </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
                     <v-flex>
@@ -78,12 +82,19 @@ export default {
 
 <style lang="scss">
 @import '~@/design/index.scss';
+
+pre {
+  white-space: pre-wrap;
+  font-family: 'Open Sans', sans-serif;
+  color: black;
+}
+
 .view-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 350px;
+    // height: 350px;
     width: 35%;
     margin: 30px;
     padding: 2%;
