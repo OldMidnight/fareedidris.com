@@ -55,18 +55,47 @@ export default {
 
 <template>
   <v-container class="view-container pa-0" fluid>
-    <v-layout class="view-layout d-flex flex-column align-center justify-center" fill-height>
-      <v-flex v-if="this.$mq !== 'phone'" class="dcu-header d-flex flex-column align-center justify-center">
-        <span class="dcu-text-color display-2 font-weight-light">DCU HEADER</span>
+    <v-layout
+      class="view-layout d-flex flex-column align-center justify-center"
+      fill-height
+    >
+      <v-flex
+        v-if="$mq !== 'phone'"
+        class="dcu-header d-flex flex-column align-center justify-center"
+      >
+        <span class="dcu-text-color display-2 font-weight-light">
+          DCU HEADER
+        </span>
       </v-flex>
-      <v-flex :class="{ 'dcu-content': this.$mq !== 'phone', 'm-dcu-content': this.$mq === 'phone' }" class="d-flex justify-center align-center">
-        <v-flex v-if="this.$mq !== 'phone'" class="dcu-nav d-flex align-center">
-          <span class="dcu-text-color text-center display-1 font-weight-light">DCU NAVIGATION</span>
+      <v-flex
+        :class="{
+          'dcu-content': $mq !== 'phone',
+          'm-dcu-content': $mq === 'phone'
+        }" 
+        class="d-flex justify-center align-center"
+      >
+        <v-flex v-if="$mq !== 'phone'" class="dcu-nav d-flex align-center">
+          <span class="dcu-text-color text-center display-1 font-weight-light">
+            DCU NAVIGATION
+          </span>
         </v-flex>
-        <v-flex :class="{ 'main-content': this.$mq !== 'phone', 'm-main-content': this.$mq === 'phone' }" class="d-flex flex-column justify-center align-center elevation-3 pa-5">
+        <v-flex
+          :class="{
+            'main-content': $mq !== 'phone',
+            'm-main-content': $mq === 'phone'
+          }"
+          class="d-flex flex-column justify-center align-center elevation-3 pa-5"
+        >
           <v-flex class="past-papers-header d-flex flex-column align-center justify-center">
-            <span :class="{ 'mb-2': this.$mq === 'phone' }" class="dcu-text-color display-1 text-center font-weight-light">Past exam papers</span>
-            <span class="font-weight-light text-center">Start typing your module code to begin searching</span>
+            <span
+              :class="{ 'mb-2': $mq === 'phone' }"
+              class="dcu-text-color display-1 text-center font-weight-light"
+            >
+              Past exam papers
+            </span>
+            <span class="font-weight-light text-center">
+              Start typing your module code to begin searching
+            </span>
           </v-flex>
           <v-flex class="ordering d-flex flex-column align-center justify-center mt-6">
             <span>Order By:</span>
@@ -75,13 +104,30 @@ export default {
               <v-radio label="Year" value="1"></v-radio>
             </v-radio-group>
           </v-flex>
-          <v-flex :class="{ 'search-bar': this.$mq !== 'phone', 'm-search-bar': this.$mq === 'phone' }" class="my-3">
-            <v-text-field v-model="search_term" outlined label="Module Code"></v-text-field>
+          <v-flex
+            :class="{
+              'search-bar': $mq !== 'phone',
+              'm-search-bar': $mq === 'phone'
+            }"
+            class="my-3"
+          >
+            <v-text-field
+              v-model="search_term"
+              prepend-inner-icon="mdi-magnify"
+              outlined
+              label="Module Code"
+            ></v-text-field>
           </v-flex>
           <div class="past-papers-container elevation-2">
             <div class="past-papers-wrapper d-flex flex-column align-center">
               <ExamPaper v-for="(paper, index) in getSortedPapers" :key="index" :exam_paper="paper" />
-              <span v-if="search_term.length === 0" :class="{ 'mt-5': this.$mq === 'phone' }" class="dcu-text-color headline font-weight-light">Enter a module code to begin</span>
+              <span
+                v-if="search_term.length === 0"
+                :class="{'mt-5': $mq === 'phone' }"
+                class="dcu-text-color headline font-weight-light"
+              >
+                Enter a module code to begin
+              </span>
             </div>
           </div>
         </v-flex>
