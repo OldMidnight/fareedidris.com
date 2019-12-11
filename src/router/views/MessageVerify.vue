@@ -40,9 +40,6 @@ export default {
                         this.validated_messages.push({validated: false, m_id: message.m_id})
                     });
                 })
-                .catch((error) => {
-                    console.log(error)
-                })
         },
         checkPassword: function() {
             api.post('ec2/admin/validate', this.verify)
@@ -52,12 +49,8 @@ export default {
                         this.getMessages()
                     }
                 })
-                .catch((error) => {
-                    console.log(error)
-                })
         },
         sortValidation: function(m_id) {
-            console.log(m_id)
             var message = this.validated_messages.find(element => {
                 return element.m_id = m_id
             })
@@ -69,9 +62,6 @@ export default {
                     if(response.data.updated) {
                         location.reload()
                     }
-                })
-                .catch((error) => {
-                    console.log(error)
                 })
         }
     }

@@ -102,16 +102,11 @@ export default {
         },
         sendMessage: function() {
             this.message_added = 'processing'
-            console.log('0')
 
             this.$v.$touch()
-            console.log('1')
-            console.log(this.creds.is_anon, this.creds.student_num, this.creds.student_email, this.creds.lecturer_id, this.creds.message_subject, this.creds.message, this.creds.urgent)
             if (this.$v.$invalid) {
                 this.message_added = 'failed'
-                console.log('2')
             } else {
-                console.log('3')
                 if (this.message_added === 'processing') {
                 api.post('ec2/validate', this.creds)
                     .then((response) => {
@@ -147,8 +142,7 @@ export default {
                         this.password_valid = 'failed'
                     }
                 })
-                .catch((error) => {
-                    console.log(error)
+                .catch(() => {
                     this.password_valid = 'failed'
                 })
         },
