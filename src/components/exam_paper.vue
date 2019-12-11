@@ -27,22 +27,22 @@ export default {
 </script>
 
 <template>
-  <div class="exam-paper elevation-1 ma-3 pa-3 d-flex justify-space-around align-center">
-    <span class="font-weight-light">Module Code: {{ exam_paper.module_code }}</span>
+  <div :class="{ 'exam-paper elevation-1 ma-3 pa-3': this.$mq !== 'phone', 'm-exam-paper py-5 px-2': this.$mq === 'phone' }" class="d-flex justify-space-around align-center">
+    <span class="font-weight-light text-center">Module Code: {{ exam_paper.module_code }}</span>
     <v-divider vertical></v-divider>
-    <span class="font-weight-light">Year: {{ exam_paper.year}}</span>
+    <span class="font-weight-light text-center">Year: {{ exam_paper.year}}</span>
     <v-divider vertical></v-divider>
-    <v-btn color="info" @click="exam_paper_dialog = true">Open</v-btn>
+    <v-btn color="info" :text="this.$mq === 'phone'" @click="exam_paper_dialog = true">Open</v-btn>
     <v-dialog v-model="exam_paper_dialog" width="700" persistent scrollable>
       <v-card>
-        <v-card-title>Exam Paper</v-card-title>
-        <v-card-subtitle>
+        <v-card-title :class="{ 'pt-2': this.$mq === 'phone' }">Exam Paper</v-card-title>
+        <v-card-subtitle :class="{ 'pb-1': this.$mq === 'phone' }">
           Code: {{ exam_paper.module_code }}
           Year: {{ exam_paper.year }}
         </v-card-subtitle>
         <v-divider></v-divider>
-        <v-card-text>
-          <v-container fluid>
+        <v-card-text :class="{ 'px-1': this.$mq === 'phone' }">
+          <v-container :class="{ 'pa-0': this.$mq === 'phone' }" fluid>
             <v-sheet>
               <pdf v-for="num in pages_num" :key="num" :src="src" :page="num" style="width: 100%"></pdf>
             </v-sheet>
@@ -61,5 +61,10 @@ export default {
 .exam-paper {
   border-radius: 5px;
   width: 80%;
+}
+
+.m-exam-paper {
+  width: 100%;
+  border-bottom: 1px solid #e6e6e6;
 }
 </style>

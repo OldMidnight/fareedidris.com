@@ -59,4 +59,8 @@ a {
     text-decoration: none;
     color: black;
 }
+
+.dcu-text-color {
+  color: rgb(79, 134, 142)
+}
 </style>
